@@ -592,10 +592,638 @@
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: #444; }
 
+  /* DATE FILTER */
+  .date-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 5px 10px;
+    flex-shrink: 0;
+  }
+
+  .date-filter-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .date-input {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+    color-scheme: dark;
+  }
+
+  .show-all-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .show-all-label input[type="checkbox"] {
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+
+  .date-stats {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .date-stats strong { color: var(--text); }
+
+  /* CALENDAR */
+  .sidebar-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 10px 4px;
+  }
+
+  .cal-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .cal-nav-title {
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  .cal-nav-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 6px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+  }
+  .cal-nav-btn:hover { background: var(--card2); }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+
+  .cal-day-header {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 4px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .cal-day {
+    min-height: 68px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .cal-day:hover { border-color: var(--accent); }
+  .cal-day.empty { background: transparent; border-color: transparent; cursor: default; }
+  .cal-day.today { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .cal-day.selected { background: rgba(108,99,255,0.15); border-color: var(--accent); }
+
+  .cal-day-num {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    line-height: 1;
+  }
+
+  .cal-day.today .cal-day-num { color: var(--accent); }
+
+  .cal-dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin-top: 2px;
+  }
+
+  .cal-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .cal-overflow {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .cal-day-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .cal-day-panel-title {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  .cal-email-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+
+  .cal-email-row:hover { border-color: var(--accent); }
+
+  .cal-email-info { flex: 1; min-width: 0; }
+  .cal-email-sender { font-size: 12px; color: var(--text-muted); }
+  .cal-email-subject { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .cal-email-badges { display: flex; gap: 5px; flex-shrink: 0; }
+
+  .cal-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .cal-stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+  }
+
+  .cal-stat-label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+  .cal-stat-value { font-size: 14px; font-weight: 700; color: var(--text); }
+  .cal-stat-sub { font-size: 11px; color: var(--accent); margin-top: 2px; }
+
+  /* AUTOMATION RULES */
+  .rules-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .rules-title { font-size: 18px; font-weight: 700; }
+
+  .rules-stats-bar {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  .rule-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: border-color 0.15s;
+  }
+
+  .rule-card:hover { border-color: #444; }
+  .rule-card.disabled { opacity: 0.45; }
+
+  .rule-toggle {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 36px;
+    height: 20px;
+    border-radius: 10px;
+    background: var(--border);
+    cursor: pointer;
+    flex-shrink: 0;
+    position: relative;
+    transition: background 0.2s;
+  }
+  .rule-toggle::after {
+    content: '';
+    position: absolute;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    top: 3px; left: 3px;
+    transition: left 0.2s;
+  }
+  .rule-toggle:checked { background: var(--accent); }
+  .rule-toggle:checked::after { left: 19px; }
+
+  .rule-body { flex: 1; min-width: 0; }
+
+  .rule-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+
+  .rule-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .rule-cond-badge {
+    background: rgba(59,130,246,0.12);
+    color: var(--zapytanie);
+    border: 1px solid rgba(59,130,246,0.25);
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-size: 11px;
+  }
+
+  .rule-action-badge {
+    background: rgba(108,99,255,0.12);
+    color: var(--accent);
+    border: 1px solid rgba(108,99,255,0.25);
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-size: 11px;
+  }
+
+  .rule-arrow { color: var(--text-muted); font-size: 13px; }
+
+  .rule-trigger {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .rule-actions-btns { display: flex; gap: 6px; flex-shrink: 0; }
+
+  .btn-sm {
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-sm:hover { background: var(--card2); color: var(--text); }
+  .btn-sm.danger:hover { background: rgba(239,68,68,0.12); color: var(--red); border-color: rgba(239,68,68,0.3); }
+
+  /* Rules modal */
+  .rule-modal { max-width: 520px; }
+
+  .rule-editor-section {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+
+  .rule-editor-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .rule-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .rule-form-row.single { grid-template-columns: 1fr; }
+
+  .rule-select, .rule-input {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 8px 10px;
+    color: var(--text);
+    font-size: 13px;
+    font-family: inherit;
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+  .rule-select:focus, .rule-input:focus { outline: none; border-color: var(--accent); }
+
+  .rule-preview {
+    background: rgba(108,99,255,0.08);
+    border: 1px solid rgba(108,99,255,0.2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .rule-preview strong { color: var(--accent); }
+
+  /* Applied rules badges in detail */
+  .applied-rules-section {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .applied-rule-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(108,99,255,0.1);
+    border: 1px solid rgba(108,99,255,0.25);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    color: var(--accent);
+    margin: 2px 3px 2px 0;
+  }
+
+  /* KNOWLEDGE BASE */
+  .kb-layout {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 16px;
+    height: 100%;
+  }
+
+  .kb-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+  }
+
+  .kb-search-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .kb-search {
+    flex: 1;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: var(--text);
+    font-size: 13px;
+    font-family: inherit;
+    transition: border-color 0.15s;
+  }
+  .kb-search:focus { outline: none; border-color: var(--accent); }
+  .kb-search::placeholder { color: var(--text-muted); }
+
+  .kb-stats-bar {
+    font-size: 11px;
+    color: var(--text-muted);
+    padding: 2px 0;
+  }
+
+  .kb-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .kb-entry-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .kb-entry-card:hover { border-color: var(--accent); }
+  .kb-entry-card.selected { border-color: var(--accent); background: rgba(108,99,255,0.08); }
+
+  .kb-entry-card-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+  }
+
+  .kb-cat-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    background: rgba(108,99,255,0.15);
+    color: var(--accent);
+    border: 1px solid rgba(108,99,255,0.3);
+    white-space: nowrap;
+  }
+
+  .kb-question {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+    flex: 1;
+  }
+
+  .kb-answer-preview {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+
+  .kb-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .kb-keyword-tag {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 10px;
+    color: var(--text-muted);
+  }
+
+  .kb-highlight { background: rgba(234,179,8,0.25); border-radius: 2px; }
+
+  /* KB Editor */
+  .kb-editor {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+  }
+
+  .kb-editor-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-muted);
+    font-size: 14px;
+    gap: 12px;
+  }
+
+  .kb-editor-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .kb-form-group { display: flex; flex-direction: column; gap: 5px; }
+  .kb-form-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .kb-select, .kb-input {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 12px;
+    color: var(--text);
+    font-size: 13px;
+    font-family: inherit;
+    transition: border-color 0.15s;
+    width: 100%;
+  }
+  .kb-select:focus, .kb-input:focus { outline: none; border-color: var(--accent); }
+
+  .kb-textarea {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: var(--text);
+    font-size: 13px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+  .kb-textarea:focus { outline: none; border-color: var(--accent); }
+
+  .kb-tags-input-wrap {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+    cursor: text;
+    transition: border-color 0.15s;
+  }
+  .kb-tags-input-wrap:focus-within { border-color: var(--accent); }
+
+  .kb-tag {
+    background: rgba(108,99,255,0.15);
+    color: var(--accent);
+    border: 1px solid rgba(108,99,255,0.3);
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .kb-tag-remove {
+    cursor: pointer;
+    opacity: 0.6;
+    font-size: 13px;
+    line-height: 1;
+  }
+  .kb-tag-remove:hover { opacity: 1; }
+
+  .kb-tag-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-size: 12px;
+    min-width: 80px;
+    font-family: inherit;
+  }
+
+  .kb-editor-actions { display: flex; gap: 8px; margin-top: 4px; }
+
+  .btn-danger {
+    background: rgba(239,68,68,0.15);
+    color: var(--red);
+    border: 1px solid rgba(239,68,68,0.3);
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.15s;
+    border: 1px solid rgba(239,68,68,0.3);
+  }
+  .btn-danger:hover { background: rgba(239,68,68,0.25); }
+
   @media (max-width: 700px) {
     .sidebar { display: none; }
     .stats-bar { display: none; }
     .btn-primary span { display: none; }
+    .kb-layout { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -606,7 +1234,7 @@
   <div class="logo">📧 MailAnalyzer</div>
 
   <div class="stats-bar" id="statsBar">
-    <div class="stat-pill" onclick="setFilter('all')">📬 Wszystkie: <strong id="statAll">8</strong></div>
+    <div class="stat-pill" onclick="setFilter('all')">📬 Wszystkie: <strong id="statAll">0</strong></div>
     <div class="stat-pill" style="color:var(--zwrot)" onclick="setFilter('Zwrot')">📦 Zwrot: <strong id="statZwrot">0</strong></div>
     <div class="stat-pill" style="color:var(--reklamacja)" onclick="setFilter('Reklamacja')">😤 Reklamacja: <strong id="statReklamacja">0</strong></div>
     <div class="stat-pill" style="color:var(--zapytanie)" onclick="setFilter('Zapytanie')">❓ Zapytanie: <strong id="statZapytanie">0</strong></div>
@@ -615,9 +1243,18 @@
   </div>
 
   <div class="topbar-actions">
+    <div class="date-filter-group">
+      <label class="date-filter-label">📅 Dzień:</label>
+      <input type="date" id="dateFilter" class="date-input" min="2026-06-15" max="2026-06-27" onchange="onDateChange()">
+      <label class="show-all-label">
+        <input type="checkbox" id="showAllDates" onchange="onShowAllChange()">
+        Wszystkie
+      </label>
+    </div>
+    <div id="dateStats" class="date-stats"></div>
     <button class="btn btn-primary" id="analyzeBtn" onclick="analyzeAll()">
       <span class="spinner" id="analyzeSpinner" style="display:none"></span>
-      🔍 <span>Analizuj wszystkie</span>
+      🔍 <span id="analyzeBtnText">Analizuj dzień</span>
     </button>
     <button class="btn btn-ghost" onclick="openSummaryModal()">📊 <span>Podsumowanie</span></button>
     <button class="btn btn-icon" onclick="openSettingsModal()" title="Ustawienia">⚙️</button>
@@ -654,6 +1291,18 @@
       <div class="filter-left"><div class="cat-dot" style="background:var(--inne)"></div>✅ Inne</div>
       <div class="count-badge" id="cnt-Inne">0</div>
     </button>
+
+    <hr class="sidebar-divider">
+    <div class="sidebar-title">Widoki</div>
+    <button class="filter-btn" id="filter-calendar" onclick="setView('calendar')">
+      <div class="filter-left"><div class="cat-dot" style="background:var(--accent)"></div>📅 Kalendarz</div>
+    </button>
+    <button class="filter-btn" id="filter-kb" onclick="setView('kb')">
+      <div class="filter-left"><div class="cat-dot" style="background:#10b981"></div>🧠 Baza wiedzy</div>
+    </button>
+    <button class="filter-btn" id="filter-rules" onclick="setView('rules')">
+      <div class="filter-left"><div class="cat-dot" style="background:#eab308"></div>⚡ Reguły</div>
+    </button>
   </div>
 
   <!-- CONTENT -->
@@ -667,6 +1316,50 @@
     <!-- List View -->
     <div id="listView">
       <div id="emailList"></div>
+    </div>
+
+    <!-- Calendar View -->
+    <div id="calendarView" style="display:none">
+      <div class="cal-nav">
+        <button class="cal-nav-btn" onclick="calPrevMonth()">‹</button>
+        <div class="cal-nav-title" id="calTitle"></div>
+        <button class="cal-nav-btn" onclick="calNextMonth()">›</button>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div id="calDayPanel"></div>
+      <div class="cal-stats" id="calStats"></div>
+    </div>
+
+    <!-- Rules View -->
+    <div id="rulesView" style="display:none">
+      <div class="rules-header">
+        <div class="rules-title">⚡ Automatyczne reguły</div>
+        <button class="btn btn-primary" onclick="openRuleEditor(null)">+ Nowa reguła</button>
+      </div>
+      <div class="rules-stats-bar" id="rulesStatsBar"></div>
+      <div id="rulesList"></div>
+    </div>
+
+    <!-- Knowledge Base View -->
+    <div id="kbView" style="display:none;height:100%">
+      <div class="kb-layout">
+        <!-- Left: list -->
+        <div class="kb-left">
+          <div class="kb-search-row">
+            <input class="kb-search" id="kbSearch" placeholder="🔍 Szukaj w bazie wiedzy..." oninput="renderKBList()">
+            <button class="btn btn-primary" style="white-space:nowrap" onclick="kbNewEntry()">+ Dodaj</button>
+          </div>
+          <div class="kb-stats-bar" id="kbStatsBar"></div>
+          <div class="kb-list" id="kbList"></div>
+        </div>
+        <!-- Right: editor -->
+        <div class="kb-editor" id="kbEditor">
+          <div class="kb-editor-empty">
+            <div style="font-size:32px">🧠</div>
+            <div>Wybierz wpis aby edytować<br>lub kliknij <strong>+ Dodaj</strong></div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Detail View -->
@@ -700,6 +1393,7 @@
     <div style="display:flex;gap:8px;margin-top:8px">
       <button class="btn btn-primary" onclick="saveApiKey()">💾 Zapisz klucz</button>
       <button class="btn btn-ghost" onclick="resetAnalysis()">🔄 Zresetuj analizę</button>
+      <button class="btn btn-ghost" onclick="resetEmails()">🔄 Resetuj maile</button>
     </div>
   </div>
 </div>
@@ -717,6 +1411,79 @@
   </div>
 </div>
 
+<!-- RULE EDITOR MODAL -->
+<div class="modal-overlay" id="ruleModal" onclick="closeModalOnOverlay(event,'ruleModal')">
+  <div class="modal rule-modal">
+    <div class="modal-header">
+      <div class="modal-title" id="ruleModalTitle">+ Nowa reguła</div>
+      <button class="btn-close" onclick="closeModal('ruleModal')">×</button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Nazwa reguły</label>
+      <input type="text" class="form-input" id="ruleName" placeholder="np. Pilne sprawy">
+    </div>
+
+    <div class="rule-editor-section">
+      <div class="rule-editor-section-title">⚙️ Warunek</div>
+      <div class="rule-form-row">
+        <div>
+          <label class="form-label" style="font-size:10px">Pole</label>
+          <select class="rule-select" id="ruleField" onchange="updateRulePreview()">
+            <option value="any">Dowolne pole</option>
+            <option value="subject">Temat</option>
+            <option value="body">Treść</option>
+            <option value="from">Nadawca</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label" style="font-size:10px">Operator</label>
+          <select class="rule-select" id="ruleOperator" onchange="updateRulePreview()">
+            <option value="contains">zawiera</option>
+            <option value="not_contains">nie zawiera</option>
+            <option value="starts_with">zaczyna się od</option>
+            <option value="ends_with">kończy się na</option>
+          </select>
+        </div>
+      </div>
+      <div class="rule-form-row single">
+        <input class="rule-input" id="ruleCondValue" placeholder="wartość do sprawdzenia..." oninput="updateRulePreview()">
+      </div>
+    </div>
+
+    <div class="rule-editor-section">
+      <div class="rule-editor-section-title">⚡ Akcja</div>
+      <div class="rule-form-row">
+        <div>
+          <label class="form-label" style="font-size:10px">Akcja</label>
+          <select class="rule-select" id="ruleActionType" onchange="onRuleActionChange()">
+            <option value="set_priority">Ustaw priorytet</option>
+            <option value="set_category">Ustaw kategorię</option>
+            <option value="set_no_autoreply">Oznacz jako ręczna odpowiedź</option>
+            <option value="skip_analysis">Pomiń analizę AI</option>
+            <option value="add_tag">Dodaj tag</option>
+          </select>
+        </div>
+        <div id="ruleActionValueWrap">
+          <label class="form-label" style="font-size:10px">Wartość</label>
+          <select class="rule-select" id="ruleActionValue" onchange="updateRulePreview()">
+            <option value="wysoki">Wysoki</option>
+            <option value="sredni">Średni</option>
+            <option value="niski">Niski</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-preview" id="rulePreview">Podgląd reguły pojawi się tutaj...</div>
+
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-primary" onclick="saveRule()">💾 Zapisz regułę</button>
+      <button class="btn btn-ghost" onclick="closeModal('ruleModal')">Anuluj</button>
+    </div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
@@ -724,20 +1491,107 @@
 // ============================================================
 // DATA
 // ============================================================
-let emails = [
-  {id:1, from:"jan.kowalski@gmail.com", subject:"Chcę zwrócić zamówienie #4521", body:"Dzień dobry, chciałbym zwrócić zamówione buty rozm. 42. Nie pasują. Proszę o informację jak to zrobić.", receivedAt:"2026-06-25T08:23:00", category:null, priority:null, summary:null, keyInfo:null, suggestedReply:null, needsHumanReview:null, analyzed:false, replied:false},
-  {id:2, from:"anna.nowak@wp.pl", subject:"Reklamacja - uszkodzony produkt", body:"Witam, otrzymałam paczkę z uszkodzoną blenderem. Opakowanie było nienaruszone ale środek rozbity. Żądam wymiany lub zwrotu pieniędzy.", receivedAt:"2026-06-25T09:15:00", category:null, priority:null, summary:null, keyInfo:null, suggestedReply:null, needsHumanReview:null, analyzed:false, replied:false},
-  {id:3, from:"piotr.wisniewski@o2.pl", subject:"Pytanie o dostępność", body:"Czy produkt Samsung Galaxy S25 w kolorze czarnym jest dostępny? Kiedy będzie jeśli nie? Interesuje mnie też gwarancja.", receivedAt:"2026-06-25T10:02:00", category:null, priority:null, summary:null, keyInfo:null, suggestedReply:null, needsHumanReview:null, analyzed:false, replied:false},
-  {id:4, from:"b2b@hurtownia-abc.pl", subject:"Propozycja współpracy hurtowej", body:"Dzień dobry, reprezentuję hurtownię ABC. Chcielibyśmy nawiązać współpracę i zamawiać produkty w ilościach hurtowych. Czy możliwe spotkanie?", receivedAt:"2026-06-25T10:45:00", category:null, priority:null, summary:null, keyInfo:null, suggestedReply:null, needsHumanReview:null, analyzed:false, replied:false},
-  {id:5, from:"maria.zielinska@gmail.com", subject:"Gdzie jest moja paczka?", body:"Zamówiłam 5 dni temu i nadal nic nie dostałam. Numer zamówienia 7823. Proszę o pilny kontakt.", receivedAt:"2026-06-25T11:30:00", category:null, priority:null, summary:null, keyInfo:null, suggestedReply:null, needsHumanReview:null, analyzed:false, replied:false},
-  {id:6, from:"tomasz.maj@gmail.com", subject:"Reklamacja - zły rozmiar", body:"Otrzymałem spodnie rozmiar L zamiast XL które zamówiłem. Proszę o wymianę lub zwrot kosztów wysyłki.", receivedAt:"2026-06-25T13:10:00", category:null, priority:null, summary:null, keyInfo:null, suggestedReply:null, needsHumanReview:null, analyzed:false, replied:false},
-  {id:7, from:"sklep@dostawca.pl", subject:"Oferta nowej linii produktów", body:"Dzień dobry, jesteśmy producentem odzieży sportowej. Mamy nową kolekcję wiosna 2027. Czy byliby Państwo zainteresowani współpracą?", receivedAt:"2026-06-25T14:22:00", category:null, priority:null, summary:null, keyInfo:null, suggestedReply:null, needsHumanReview:null, analyzed:false, replied:false},
-  {id:8, from:"karolina.wp@wp.pl", subject:"Jak długo trwa dostawa?", body:"Chciałabym złożyć zamówienie ale nie wiem ile czeka się na dostawę do Gdyni. Czy możliwa dostawa w sobotę?", receivedAt:"2026-06-25T15:05:00", category:null, priority:null, summary:null, keyInfo:null, suggestedReply:null, needsHumanReview:null, analyzed:false, replied:false}
-];
+function generateEmails() {
+  const existing = localStorage.getItem('crm_emails_generated');
+  if (existing) return JSON.parse(existing);
+
+  const firstNames = ["Jan", "Anna", "Piotr", "Maria", "Tomasz", "Katarzyna", "Marcin", "Agnieszka", "Michał", "Barbara", "Krzysztof", "Joanna", "Andrzej", "Magdalena", "Robert", "Monika", "Paweł", "Aleksandra", "Łukasz", "Natalia", "Adam", "Ewa", "Marek", "Karolina", "Jakub", "Sylwia", "Rafał", "Dorota", "Grzegorz", "Marta"];
+  const lastNames = ["Kowalski", "Nowak", "Wiśniewski", "Wójcik", "Kowalczyk", "Kamiński", "Lewandowski", "Zielińska", "Szymański", "Woźniak", "Dąbrowski", "Kozłowski", "Mazur", "Jankowski", "Wojciechowski", "Kwiatkowski", "Krawczyk", "Piotrowska", "Grabowski", "Nowakowski"];
+  const domains = ["gmail.com", "wp.pl", "onet.pl", "o2.pl", "interia.pl", "poczta.fm"];
+
+  const emailTemplates = [
+    { subject: "Chcę zwrócić zamówienie #{nr}", body: "Dzień dobry, chciałbym/chciałabym zwrócić zamówienie nr #{nr}. {powod_zwrotu}. Proszę o informację jak to zrobić.", category: "Zwrot" },
+    { subject: "Zwrot towaru - zamówienie #{nr}", body: "Witam, zakupiłem/am produkt {produkt} ale chcę go zwrócić. {powod_zwrotu}. Jak wygląda procedura?", category: "Zwrot" },
+    { subject: "Prośba o zwrot pieniędzy #{nr}", body: "Dzień dobry, odesłałem/am towar w zeszłym tygodniu (zamówienie #{nr}) ale nie dostałem/am jeszcze zwrotu pieniędzy.", category: "Zwrot" },
+    { subject: "Reklamacja - uszkodzony produkt #{nr}", body: "Witam, otrzymałem/am zamówienie #{nr} ale produkt {produkt} jest uszkodzony. {opis_uszkodzenia}. Żądam wymiany lub zwrotu.", category: "Reklamacja" },
+    { subject: "Produkt niezgodny z opisem", body: "Dzień dobry, zamówiłem/am {produkt} ale otrzymałem/am coś zupełnie innego. Na stronie był {opis_oczekiwany}. Proszę o pilny kontakt.", category: "Reklamacja" },
+    { subject: "Zły rozmiar w zamówieniu #{nr}", body: "Witam, zamówiłem/am rozmiar {rozmiar1} a dostałem/am {rozmiar2}. Zamówienie #{nr}. Proszę o wymianę.", category: "Reklamacja" },
+    { subject: "Produkt przestał działać", body: "Dzień dobry, kupiłem/am {produkt} {czas_temu} i przestał działać. Używałem/am zgodnie z instrukcją. Chcę reklamację.", category: "Reklamacja" },
+    { subject: "Pytanie o dostępność produktu", body: "Dzień dobry, czy {produkt} jest dostępny w magazynie? Interesuje mnie dostawa do {miasto}. Kiedy mogę się spodziewać?", category: "Zapytanie" },
+    { subject: "Jak długo trwa dostawa?", body: "Witam, chciałbym/chciałabym złożyć zamówienie ale nie wiem ile trwa dostawa do {miasto}. Czy możliwa dostawa w weekend?", category: "Zapytanie" },
+    { subject: "Pytanie o gwarancję", body: "Dzień dobry, interesuje mnie {produkt}. Jaki jest okres gwarancji? Czy możliwa gwarancja rozszerzona?", category: "Zapytanie" },
+    { subject: "Czy możliwy odbiór osobisty?", body: "Witam, czy możliwy jest odbiór osobisty zamówienia w {miasto}? Mam adres {ulica}.", category: "Zapytanie" },
+    { subject: "Prośba o fakturę VAT", body: "Dzień dobry, dokonałem/am zakupu nr #{nr} i potrzebuję fakturę VAT na firmę {firma}. NIP: {nip}.", category: "Zapytanie" },
+    { subject: "Propozycja współpracy hurtowej", body: "Dzień dobry, reprezentuję firmę {firma}. Chcielibyśmy nawiązać współpracę hurtową. Interesuje nas {produkt} w ilości {ilosc} sztuk miesięcznie.", category: "Oferta biznesowa" },
+    { subject: "Zapytanie o dropshipping", body: "Witam, prowadzę sklep internetowy i szukam dostawcy do dropshippingu. Czy oferujecie taki model? Jakie są warunki?", category: "Oferta biznesowa" },
+    { subject: "Propozycja współpracy marketingowej", body: "Dzień dobry, reprezentuję agencję marketingową {firma}. Chcielibyśmy zaproponować współpracę - reklama w social media i newsletter.", category: "Oferta biznesowa" },
+  ];
+
+  const powodyZwrotu = ["Produkt nie pasuje", "Zmieniłem/am zdanie", "Produkt nie spełnia oczekiwań", "Kupiłem/am w złym rozmiarze", "Dostałem/am w prezencie już taki produkt"];
+  const produkty = ["buty Nike Air Max", "blender Philips", "laptop Lenovo", "słuchawki Sony", "kurtka zimowa", "ekspres do kawy", "tablet Samsung", "zegarek Casio", "perfumy Chanel", "telefon iPhone", "telewizor LG", "robot kuchenny", "torba skórzana", "spodnie jeansowe", "kamera GoPro"];
+  const opisyUszkodzen = ["Opakowanie było nienaruszone ale produkt w środku rozbity", "Widoczne zarysowania na obudowie", "Produkt nie włącza się", "Brakuje elementów z zestawu", "Produkt ma plamę/zabrudzenie"];
+  const miasta = ["Gdynia", "Gdańsk", "Sopot", "Warszawa", "Kraków", "Poznań", "Wrocław", "Łódź", "Szczecin", "Katowice"];
+  const firmy = ["TechSolutions Sp. z o.o.", "ABC Hurtownia", "Media Group", "FastShop", "PolCommerce"];
+  const rozmiary = ["XS", "S", "M", "L", "XL", "XXL", "36", "37", "38", "39", "40", "41", "42", "43", "44"];
+
+  function randomItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  function randomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+  function randomNr() { return Math.floor(Math.random() * 9000) + 1000; }
+
+  const result = [];
+  let id = 1;
+
+  for (let day = 15; day <= 27; day++) {
+    const emailsPerDay = randomInt(20, 30);
+    for (let i = 0; i < emailsPerDay; i++) {
+      const firstName = randomItem(firstNames);
+      const lastName = randomItem(lastNames);
+      const domain = randomItem(domains);
+      const from = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@${domain}`;
+      const template = randomItem(emailTemplates);
+      const nr = randomNr();
+      const produkt = randomItem(produkty);
+      const hour = randomInt(7, 20);
+      const minute = randomInt(0, 59);
+
+      let subject = template.subject.replace('{nr}', nr).replace('{produkt}', produkt);
+
+      let body = template.body
+        .replace(/#{nr}/g, nr)
+        .replace(/{nr}/g, nr)
+        .replace(/{produkt}/g, produkt)
+        .replace(/{powod_zwrotu}/g, randomItem(powodyZwrotu))
+        .replace(/{opis_uszkodzenia}/g, randomItem(opisyUszkodzen))
+        .replace(/{opis_oczekiwany}/g, produkt + ' w kolorze czarnym')
+        .replace(/{rozmiar1}/g, randomItem(rozmiary))
+        .replace(/{rozmiar2}/g, randomItem(rozmiary))
+        .replace(/{czas_temu}/g, randomItem(['tydzień temu', '2 tygodnie temu', 'miesiąc temu']))
+        .replace(/{miasto}/g, randomItem(miasta))
+        .replace(/{ulica}/g, 'ul. ' + randomItem(['Główna', 'Kwiatowa', 'Lipowa', 'Słoneczna']) + ' ' + randomInt(1, 50))
+        .replace(/{firma}/g, randomItem(firmy))
+        .replace(/{nip}/g, randomInt(1000000000, 9999999999))
+        .replace(/{ilosc}/g, randomInt(10, 500));
+
+      result.push({
+        id: id++,
+        from,
+        fromName: `${firstName} ${lastName}`,
+        subject,
+        body,
+        receivedAt: `2026-06-${String(day).padStart(2, '0')}T${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:00`,
+        category: null,
+        priority: null,
+        summary: null,
+        keyInfo: null,
+        suggestedReply: null,
+        needsHumanReview: false,
+        analyzed: false,
+        replied: false
+      });
+    }
+  }
+
+  localStorage.setItem('crm_emails_generated', JSON.stringify(result));
+  return result;
+}
+
+let emails = generateEmails();
 
 let currentFilter = 'all';
 let currentEmailId = null;
 let analyzing = false;
+let currentDate = '2026-06-27'; // default to latest day
+let showAllDates = false;
 
 // ============================================================
 // HELPERS
@@ -790,31 +1644,58 @@ function renderAll() {
 }
 
 function updateStats() {
+  const pool = getDateFilteredEmails();
   const cats = ['Zwrot','Reklamacja','Zapytanie','Oferta biznesowa','Inne'];
-  document.getElementById('statAll').textContent = emails.length;
-  document.getElementById('cnt-all').textContent = emails.length;
+
+  document.getElementById('statAll').textContent = pool.length;
+  document.getElementById('cnt-all').textContent = pool.length;
   cats.forEach(c => {
-    const n = emails.filter(e => e.category === c).length;
-    const shortId = c.replace(' ','\\\ ');
+    const n = pool.filter(e => e.category === c).length;
     const el1 = document.getElementById('stat' + c.replace(' biznesowa','').replace(' ',''));
     const el2 = document.getElementById('cnt-' + c);
     if (el1) el1.textContent = n;
     if (el2) el2.textContent = n;
   });
-  // stats bar
-  document.getElementById('statZwrot').textContent = emails.filter(e=>e.category==='Zwrot').length;
-  document.getElementById('statReklamacja').textContent = emails.filter(e=>e.category==='Reklamacja').length;
-  document.getElementById('statZapytanie').textContent = emails.filter(e=>e.category==='Zapytanie').length;
-  document.getElementById('statOferta').textContent = emails.filter(e=>e.category==='Oferta biznesowa').length;
-  document.getElementById('statInne').textContent = emails.filter(e=>e.category==='Inne').length;
+  document.getElementById('statZwrot').textContent = pool.filter(e=>e.category==='Zwrot').length;
+  document.getElementById('statReklamacja').textContent = pool.filter(e=>e.category==='Reklamacja').length;
+  document.getElementById('statZapytanie').textContent = pool.filter(e=>e.category==='Zapytanie').length;
+  document.getElementById('statOferta').textContent = pool.filter(e=>e.category==='Oferta biznesowa').length;
+  document.getElementById('statInne').textContent = pool.filter(e=>e.category==='Inne').length;
+
+  // Date stats bar
+  const analyzed = pool.filter(e => e.analyzed).length;
+  const pending = pool.length - analyzed;
+  const dateStatsEl = document.getElementById('dateStats');
+  if (!showAllDates) {
+    dateStatsEl.innerHTML = `📧 <strong>${pool.length}</strong> maili &nbsp;•&nbsp; ✅ <strong>${analyzed}</strong> przeanalizowanych &nbsp;•&nbsp; ⏳ <strong>${pending}</strong> do analizy`;
+  } else {
+    dateStatsEl.innerHTML = `📧 <strong>${pool.length}</strong> wszystkich &nbsp;•&nbsp; ✅ <strong>${analyzed}</strong> przeanalizowanych`;
+  }
+
+  // Analyze button label
+  const btnText = document.getElementById('analyzeBtnText');
+  if (btnText) {
+    if (showAllDates) {
+      btnText.textContent = 'Analizuj wszystkie';
+    } else {
+      const d = new Date(currentDate + 'T00:00:00');
+      btnText.textContent = `Analizuj dzień ${d.getDate()}.${String(d.getMonth()+1).padStart(2,'0')}`;
+    }
+  }
+}
+
+function getDateFilteredEmails() {
+  if (showAllDates) return emails;
+  return emails.filter(e => e.receivedAt.startsWith(currentDate));
 }
 
 function renderList() {
   const list = document.getElementById('emailList');
-  let filtered = currentFilter === 'all' ? emails : emails.filter(e => e.category === currentFilter);
+  const pool = getDateFilteredEmails();
+  let filtered = currentFilter === 'all' ? pool : pool.filter(e => e.category === currentFilter);
 
   if (filtered.length === 0) {
-    list.innerHTML = '<div class="no-emails">Brak maili w tej kategorii.</div>';
+    list.innerHTML = `<div class="no-emails">Brak maili${showAllDates ? ' w tej kategorii' : ' w tym dniu'}.${!showAllDates ? '<br><small style="opacity:.6">Zaznacz „Wszystkie" aby zobaczyć całą skrzynkę.</small>' : ''}</div>`;
     return;
   }
 
@@ -832,8 +1713,8 @@ function renderList() {
       <div class="email-badges">
         ${email.category ? `<span class="badge badge-${cc}">${catIcon(email.category)} ${email.category}</span>` : ''}
         ${email.priority ? `<span class="badge badge-${email.priority}">${email.priority === 'wysoki' ? '🔴' : email.priority === 'sredni' ? '🟡' : '🟢'} ${email.priority}</span>` : ''}
-        ${email.needsHumanReview ? `<span class="badge" style="background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.3)">👤 Wymaga uwagi</span>` : ''}
-        ${email.suggestedReply ? `<span class="badge badge-reply">💬 Gotowa odpowiedź</span>` : ''}
+        ${email.analyzed && email.canAutoReply ? `<span class="badge badge-reply">💬 Auto-odpowiedź</span>` : ''}
+        ${email.analyzed && !email.canAutoReply ? `<span class="badge" style="background:rgba(249,115,22,0.12);color:#f97316;border:1px solid rgba(249,115,22,0.3)">✋ Ręczna</span>` : ''}
         ${email.replied ? `<span class="badge" style="background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.3)">✅ Wysłano</span>` : ''}
       </div>
     </div>`;
@@ -844,7 +1725,51 @@ function escHtml(s) {
   return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+function mdToHtml(s) {
+  const lines = (s || '').split('\n');
+  const out = [];
+  let inUl = false, inOl = false;
+
+  for (const raw of lines) {
+    const line = raw.trim();
+
+    if (/^##\s+/.test(line)) {
+      if (inUl) { out.push('</ul>'); inUl = false; }
+      if (inOl) { out.push('</ol>'); inOl = false; }
+      out.push('<h3>' + escHtml(line.replace(/^##\s+/, '')) + '</h3>');
+    } else if (/^- /.test(line)) {
+      if (inOl) { out.push('</ol>'); inOl = false; }
+      if (!inUl) { out.push('<ul>'); inUl = true; }
+      out.push('<li>' + inlineMd(line.replace(/^- /, '')) + '</li>');
+    } else if (/^\d+\.\s/.test(line)) {
+      if (inUl) { out.push('</ul>'); inUl = false; }
+      if (!inOl) { out.push('<ol>'); inOl = true; }
+      out.push('<li>' + inlineMd(line.replace(/^\d+\.\s/, '')) + '</li>');
+    } else {
+      if (inUl) { out.push('</ul>'); inUl = false; }
+      if (inOl) { out.push('</ol>'); inOl = false; }
+      if (line === '') {
+        out.push('<br>');
+      } else {
+        out.push('<p>' + inlineMd(line) + '</p>');
+      }
+    }
+  }
+  if (inUl) out.push('</ul>');
+  if (inOl) out.push('</ol>');
+  return out.join('');
+}
+
+function inlineMd(s) {
+  return escHtml(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+}
+
 function setFilter(f) {
+  currentView = 'list';
+  document.getElementById('calendarView').style.display = 'none';
+  document.getElementById('kbView').style.display = 'none';
+  document.getElementById('rulesView').style.display = 'none';
+  document.getElementById('listView').style.display = '';
   currentFilter = f;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   const fb = document.getElementById('filter-' + f);
@@ -869,7 +1794,8 @@ function openDetail(id) {
   let badgesHtml = '';
   if (email.category) badgesHtml += `<span class="badge badge-${catClass(email.category)}">${catIcon(email.category)} ${email.category}</span>`;
   if (email.priority) badgesHtml += `<span class="badge badge-${email.priority}">${email.priority}</span>`;
-  if (email.needsHumanReview) badgesHtml += `<span class="badge" style="background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.3)">👤 Wymaga uwagi</span>`;
+  if (email.analyzed && email.canAutoReply)  badgesHtml += `<span class="badge badge-reply">💬 Auto-odpowiedź</span>`;
+  if (email.analyzed && !email.canAutoReply) badgesHtml += `<span class="badge" style="background:rgba(249,115,22,0.12);color:#f97316;border:1px solid rgba(249,115,22,0.3)">✋ Ręczna</span>`;
   badges.innerHTML = badgesHtml;
 
   // Meta
@@ -916,14 +1842,25 @@ function renderDetailAnalysis(email) {
       <div class="section-title">Kluczowe informacje</div>
       <ul class="key-info-list">${keyInfoHtml}</ul>
     </div>` : ''}
-    ${email.suggestedReply ? `<div>
-      <div class="section-title">💬 Sugerowana odpowiedź</div>
+    ${email.canAutoReply && email.suggestedReply ? `<div>
+      <div class="section-title" style="color:var(--green)">💬 Auto-odpowiedź</div>
       <textarea class="reply-textarea" id="replyTextarea">${escHtml(email.suggestedReply)}</textarea>
       <div class="reply-actions">
         <button class="btn-send" onclick="sendReply(${email.id})" ${email.replied?'disabled style="opacity:0.5"':''}>
           ${email.replied ? '✅ Wysłano' : '✅ Wyślij odpowiedź'}
         </button>
       </div>
+    </div>` : ''}
+    ${email.analyzed && !email.canAutoReply ? `<div>
+      <div class="section-title" style="color:#f97316">✋ Wymaga ręcznej odpowiedzi</div>
+      <div style="background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);border-radius:8px;padding:12px 14px;margin-bottom:10px;font-size:13px;color:var(--yellow);line-height:1.5">
+        ⚠️ Ten mail wymaga ręcznej odpowiedzi. AI nie ma wystarczających danych aby odpowiedzieć automatycznie.
+      </div>
+      ${email.noReplyReason ? `<div style="font-size:12px;color:var(--text-muted);padding:0 2px">Powód: ${escHtml(email.noReplyReason)}</div>` : ''}
+    </div>` : ''}
+    ${email.appliedRules && email.appliedRules.length ? `<div class="applied-rules-section">
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:5px">⚡ Zastosowane reguły:</div>
+      ${email.appliedRules.map(n => `<span class="applied-rule-badge">⚡ ${escHtml(n)}</span>`).join('')}
     </div>` : ''}
   `;
 }
@@ -957,7 +1894,7 @@ async function analyzeAll() {
     return;
   }
 
-  const unanalyzed = emails.filter(e => !e.analyzed);
+  const unanalyzed = getDateFilteredEmails().filter(e => !e.analyzed);
   if (unanalyzed.length === 0) {
     showToast('✅ Wszystkie maile już przeanalizowane');
     return;
@@ -979,21 +1916,48 @@ async function analyzeAll() {
     document.getElementById('progressFill').style.width = (done / total * 100) + '%';
 
     try {
-      const result = await callAnalyzeAPI(key, email);
-      email.category = result.category || 'Inne';
-      email.priority = result.priority || 'niski';
-      email.summary = result.summary || '';
-      email.keyInfo = result.keyInfo || [];
-      email.suggestedReply = result.suggestedReply || null;
-      email.needsHumanReview = result.needsHumanReview || false;
-      email.analyzed = true;
+      // Apply automation rules before AI
+      email.appliedRules = [];
+      const { skip } = applyRules(email);
+
+      if (skip) {
+        email.category = email.category || 'Inne';
+        email.priority = email.priority || 'niski';
+        email.summary = 'Pominięto analizę AI (reguła automatyczna)';
+        email.keyInfo = [];
+        email.canAutoReply = false;
+        email.suggestedReply = null;
+        email.noReplyReason = 'Pominięto przez regułę automatyczną';
+        email.needsHumanReview = false;
+        email.analyzed = true;
+      } else {
+        const result = await callAnalyzeAPI(key, email);
+        // Rules may have pre-set category/priority — only override if AI responded
+        email.category = email.category || result.category || 'Inne';
+        email.priority = email.priority || result.priority || 'niski';
+        if (result.category && !email.appliedRules.some(n => rulesData.find(r=>r.name===n&&r.action.type==='set_category'))) {
+          email.category = result.category || email.category;
+        }
+        if (result.priority && !email.appliedRules.some(n => rulesData.find(r=>r.name===n&&r.action.type==='set_priority'))) {
+          email.priority = result.priority || email.priority;
+        }
+        email.summary = result.summary || '';
+        email.keyInfo = result.keyInfo || [];
+        email.canAutoReply = result.canAutoReply || false;
+        email.suggestedReply = result.canAutoReply ? (result.suggestedReply || null) : null;
+        email.noReplyReason = result.noReplyReason || null;
+        email.needsHumanReview = !result.canAutoReply;
+        email.analyzed = true;
+      }
     } catch (err) {
       console.error('Error analyzing email', email.id, err);
       email.category = 'Inne';
       email.priority = 'sredni';
       email.summary = 'Błąd analizy: ' + err.message;
       email.keyInfo = [];
-      email.suggestedReply = '';
+      email.canAutoReply = false;
+      email.suggestedReply = null;
+      email.noReplyReason = 'Błąd analizy: ' + err.message;
       email.needsHumanReview = true;
       email.analyzed = true;
     }
@@ -1021,14 +1985,27 @@ async function analyzeAll() {
 }
 
 async function callAnalyzeAPI(apiKey, email) {
+  const systemPrompt = `Jesteś asystentem AI dla sklepu e-commerce. Analizujesz maile klientów.
+
+${getKBContext()}
+
+ZASADY GENEROWANIA ODPOWIEDZI:
+- Jeśli mail dotyczy zwrotu, reklamacji, pytania o dostawę/płatności/produkty I masz wystarczające informacje w bazie wiedzy → wygeneruj gotową odpowiedź i ustaw canAutoReply: true
+- Jeśli mail to oferta biznesowa, propozycja współpracy, sponsoring, reklama → NIE generuj odpowiedzi, ustaw canAutoReply: false
+- Jeśli pytanie jest zbyt specyficzne i nie masz danych w bazie wiedzy (np. pytanie o konkretne zamówienie, status paczki, indywidualną wycenę) → NIE generuj odpowiedzi, ustaw canAutoReply: false
+- Jeśli nie jesteś pewien → ustaw canAutoReply: false
+
+Odpowiadaj TYLKO w formacie JSON bez komentarzy ani markdown.`;
+
   const userPrompt = `Przeanalizuj tego maila i zwróć JSON:
 {
   "category": "Zwrot" lub "Reklamacja" lub "Zapytanie" lub "Oferta biznesowa" lub "Inne",
   "priority": "wysoki" lub "sredni" lub "niski",
   "summary": "max 2 zdania co klient chce",
   "keyInfo": ["najważniejsza info 1", "najważniejsza info 2"],
-  "suggestedReply": "gotowa odpowiedź po polsku, profesjonalna, zaczynająca się od Dzień dobry",
-  "needsHumanReview": true lub false
+  "canAutoReply": true lub false,
+  "suggestedReply": "gotowa odpowiedź po polsku profesjonalna zaczynająca się od Dzień dobry LUB null jeśli canAutoReply false",
+  "noReplyReason": null lub "krótkie wyjaśnienie dlaczego nie można automatycznie odpowiedzieć"
 }
 
 Mail od: ${email.from}
@@ -1041,12 +2018,12 @@ Treść: ${email.body}`;
       'Content-Type': 'application/json',
       'x-api-key': apiKey,
       'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-request-proxy': 'true'
+      'anthropic-dangerous-direct-browser-access': 'true'
     },
     body: JSON.stringify({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 1024,
-      system: 'Jesteś asystentem AI dla sklepu e-commerce. Analizujesz maile klientów i dostawców. Odpowiadasz TYLKO w formacie JSON bez żadnych komentarzy ani markdown.',
+      system: systemPrompt,
       messages: [{ role: 'user', content: userPrompt }]
     })
   });
@@ -1070,8 +2047,9 @@ Treść: ${email.body}`;
       priority: 'sredni',
       summary: 'Nie udało się przeanalizować automatycznie',
       keyInfo: [],
-      suggestedReply: '',
-      needsHumanReview: true
+      canAutoReply: false,
+      suggestedReply: null,
+      noReplyReason: 'Błąd parsowania odpowiedzi AI'
     };
   }
 }
@@ -1128,7 +2106,7 @@ async function openSummaryModal() {
         'Content-Type': 'application/json',
         'x-api-key': key,
         'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-request-proxy': 'true'
+        'anthropic-dangerous-direct-browser-access': 'true'
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
@@ -1146,7 +2124,7 @@ async function openSummaryModal() {
 
     document.getElementById('summaryContent').innerHTML = statsHtml + `
       <div class="section-title" style="margin-bottom:10px">🤖 Analiza AI</div>
-      <div class="summary-text">${escHtml(text)}</div>`;
+      <div class="summary-text">${mdToHtml(text)}</div>`;
   } catch (err) {
     document.getElementById('summaryContent').innerHTML = statsHtml + `
       <div class="no-analysis">Błąd generowania podsumowania: ${escHtml(err.message)}</div>`;
@@ -1176,12 +2154,18 @@ function resetAnalysis() {
   emails.forEach(e => {
     e.category = null; e.priority = null; e.summary = null;
     e.keyInfo = null; e.suggestedReply = null;
-    e.needsHumanReview = null; e.analyzed = false; e.replied = false;
+    e.canAutoReply = undefined; e.noReplyReason = null;
+    e.needsHumanReview = false; e.analyzed = false; e.replied = false;
   });
   closeModal('settingsModal');
   closeDetail();
   renderAll();
   showToast('🔄 Analiza zresetowana');
+}
+
+function resetEmails() {
+  localStorage.removeItem('crm_emails_generated');
+  location.reload();
 }
 
 function closeModal(id) {
@@ -1193,8 +2177,716 @@ function closeModalOnOverlay(event, id) {
 }
 
 // ============================================================
+// VIEW SWITCHING
+// ============================================================
+let currentView = 'list'; // 'list' | 'calendar'
+
+function setView(view) {
+  currentView = view;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+
+  document.getElementById('listView').style.display = 'none';
+  document.getElementById('detailView').style.display = 'none';
+  document.getElementById('calendarView').style.display = 'none';
+  document.getElementById('kbView').style.display = 'none';
+  document.getElementById('rulesView').style.display = 'none';
+
+  if (view === 'calendar') {
+    document.getElementById('filter-calendar').classList.add('active');
+    document.getElementById('calendarView').style.display = 'block';
+    renderCalendar();
+  } else if (view === 'kb') {
+    document.getElementById('filter-kb').classList.add('active');
+    document.getElementById('kbView').style.display = 'block';
+    kbLoad();
+    renderKBList();
+  } else if (view === 'rules') {
+    document.getElementById('filter-rules').classList.add('active');
+    document.getElementById('rulesView').style.display = 'block';
+    renderRules();
+  }
+}
+
+// ============================================================
+// CALENDAR
+// ============================================================
+const CAT_DOT_COLOR = {
+  'Zwrot': 'var(--zwrot)',
+  'Reklamacja': 'var(--reklamacja)',
+  'Zapytanie': 'var(--zapytanie)',
+  'Oferta biznesowa': 'var(--oferta)',
+  'Inne': 'var(--inne)'
+};
+
+let calYear  = new Date().getFullYear();
+let calMonth = new Date().getMonth(); // 0-based
+let calSelectedDay = null;
+
+function calPrevMonth() {
+  calMonth--;
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  calSelectedDay = null;
+  renderCalendar();
+}
+
+function calNextMonth() {
+  calMonth++;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  calSelectedDay = null;
+  renderCalendar();
+}
+
+function emailsOnDay(y, m, d) {
+  const prefix = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  return emails.filter(e => e.receivedAt.startsWith(prefix));
+}
+
+function renderCalendar() {
+  const DAYS = ['Pn','Wt','Śr','Cz','Pt','So','Nd'];
+  const MONTHS_PL = ['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec',
+                     'Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'];
+
+  document.getElementById('calTitle').textContent = `${MONTHS_PL[calMonth]} ${calYear}`;
+
+  const today = new Date();
+  const todayY = today.getFullYear(), todayM = today.getMonth(), todayD = today.getDate();
+
+  // First day of month (Monday=0 offset)
+  const firstDow = new Date(calYear, calMonth, 1).getDay(); // 0=Sun
+  const offset = (firstDow + 6) % 7; // shift so Mon=0
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+
+  let html = DAYS.map(d => `<div class="cal-day-header">${d}</div>`).join('');
+
+  // Empty cells before first day
+  for (let i = 0; i < offset; i++) html += `<div class="cal-day empty"></div>`;
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dayEmails = emailsOnDay(calYear, calMonth, d);
+    const isToday   = (calYear === todayY && calMonth === todayM && d === todayD);
+    const isSelected = calSelectedDay === d;
+
+    let innerHtml = `<div class="cal-day-num">${d}</div>`;
+
+    if (dayEmails.length > 0) {
+      if (dayEmails.length > 3) {
+        // show dots for first 3 + overflow label
+        const dots = dayEmails.slice(0, 3).map(e =>
+          `<div class="cal-dot" style="background:${CAT_DOT_COLOR[e.category] || 'var(--inne)'}"></div>`
+        ).join('');
+        innerHtml += `<div class="cal-dots">${dots}</div>`;
+        innerHtml += `<div class="cal-overflow">+${dayEmails.length - 3} więcej</div>`;
+      } else {
+        const dots = dayEmails.map(e =>
+          `<div class="cal-dot" style="background:${CAT_DOT_COLOR[e.category] || 'var(--inne)'}"></div>`
+        ).join('');
+        innerHtml += `<div class="cal-dots">${dots}</div>`;
+      }
+    }
+
+    const cls = ['cal-day', isToday ? 'today' : '', isSelected ? 'selected' : ''].filter(Boolean).join(' ');
+    html += `<div class="${cls}" onclick="selectCalDay(${d})">${innerHtml}</div>`;
+  }
+
+  document.getElementById('calGrid').innerHTML = html;
+  renderCalDayPanel();
+  renderCalStats();
+}
+
+function selectCalDay(d) {
+  calSelectedDay = (calSelectedDay === d) ? null : d;
+  renderCalendar();
+}
+
+function renderCalDayPanel() {
+  const panel = document.getElementById('calDayPanel');
+  if (!calSelectedDay) { panel.innerHTML = ''; return; }
+
+  const dayEmails = emailsOnDay(calYear, calMonth, calSelectedDay);
+  if (dayEmails.length === 0) {
+    panel.innerHTML = `<div class="cal-day-panel"><div class="cal-day-panel-title">📅 ${calSelectedDay} — brak maili</div></div>`;
+    return;
+  }
+
+  const MONTHS_PL = ['stycznia','lutego','marca','kwietnia','maja','czerwca',
+                     'lipca','sierpnia','września','października','listopada','grudnia'];
+
+  const rows = dayEmails.map(e => {
+    const cc = catClass(e.category);
+    return `<div class="cal-email-row" onclick="openDetailFromCal(${e.id})">
+      <div class="cal-email-info">
+        <div class="cal-email-sender">${escHtml(e.from)}</div>
+        <div class="cal-email-subject">${escHtml(e.subject)}</div>
+      </div>
+      <div class="cal-email-badges">
+        ${e.category ? `<span class="badge badge-${cc}">${catIcon(e.category)} ${e.category}</span>` : '<span style="font-size:11px;color:var(--text-muted)">nieprze-<br>analizowano</span>'}
+        ${e.priority ? `<span class="badge badge-${e.priority}">${e.priority}</span>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  panel.innerHTML = `<div class="cal-day-panel">
+    <div class="cal-day-panel-title">📅 ${calSelectedDay} ${MONTHS_PL[calMonth]} ${calYear} — ${dayEmails.length} ${dayEmails.length === 1 ? 'mail' : 'maili'}</div>
+    ${rows}
+  </div>`;
+}
+
+function openDetailFromCal(id) {
+  const email = emails.find(e => e.id === id);
+  if (email) {
+    const dateStr = email.receivedAt.slice(0, 10);
+    setDateAndSwitchToList(dateStr);
+  }
+  openDetail(id);
+}
+
+function selectCalDayAndSwitch(d) {
+  const dateStr = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  setDateAndSwitchToList(dateStr);
+}
+
+function renderCalStats() {
+  // Count emails per day across all months with emails
+  const dayCounts = {};
+  const reklamacjaByDay = {};
+
+  emails.forEach(e => {
+    const day = e.receivedAt.slice(0, 10);
+    dayCounts[day] = (dayCounts[day] || 0) + 1;
+    if (e.category === 'Reklamacja') {
+      reklamacjaByDay[day] = (reklamacjaByDay[day] || 0) + 1;
+    }
+  });
+
+  const formatDay = iso => {
+    const [y, m, d] = iso.split('-');
+    const MONTHS = ['sty','lut','mar','kwi','maj','cze','lip','sie','wrz','paź','lis','gru'];
+    return `${parseInt(d)} ${MONTHS[parseInt(m)-1]} ${y}`;
+  };
+
+  let busiestDay = '', busiestCount = 0;
+  for (const [day, cnt] of Object.entries(dayCounts)) {
+    if (cnt > busiestCount) { busiestCount = cnt; busiestDay = day; }
+  }
+
+  let mostReklamacjaDay = '', mostReklamacjaCount = 0;
+  for (const [day, cnt] of Object.entries(reklamacjaByDay)) {
+    if (cnt > mostReklamacjaCount) { mostReklamacjaCount = cnt; mostReklamacjaDay = day; }
+  }
+
+  document.getElementById('calStats').innerHTML = `
+    <div class="cal-stat-card">
+      <div class="cal-stat-label">📅 Najbardziej pracowity dzień</div>
+      <div class="cal-stat-value">${busiestDay ? formatDay(busiestDay) : '—'}</div>
+      <div class="cal-stat-sub">${busiestCount > 0 ? busiestCount + ' maili' : ''}</div>
+    </div>
+    <div class="cal-stat-card">
+      <div class="cal-stat-label">😤 Najwięcej reklamacji</div>
+      <div class="cal-stat-value">${mostReklamacjaDay ? formatDay(mostReklamacjaDay) : mostReklamacjaCount === 0 ? 'Brak danych' : '—'}</div>
+      <div class="cal-stat-sub">${mostReklamacjaCount > 0 ? mostReklamacjaCount + ' reklamacji' : 'Przeanalizuj maile'}</div>
+    </div>`;
+}
+
+// ============================================================
+// AUTOMATION RULES
+// ============================================================
+const RULES_KEY = 'mailanalyzer_rules';
+const RULES_DEFAULT = [
+  { id:1, name:"Pilne sprawy",          enabled:true, condition:{field:"any",     operator:"contains", value:"pilne"},       action:{type:"set_priority",  value:"wysoki"},          triggerCount:0, createdAt:"2026-06-01T10:00:00" },
+  { id:2, name:"Pilne - natychmiast",   enabled:true, condition:{field:"any",     operator:"contains", value:"natychmiast"}, action:{type:"set_priority",  value:"wysoki"},          triggerCount:0, createdAt:"2026-06-01T10:01:00" },
+  { id:3, name:"Oferty biznesowe",      enabled:true, condition:{field:"subject", operator:"contains", value:"współpraca"},  action:{type:"set_category",  value:"Oferta biznesowa"},triggerCount:0, createdAt:"2026-06-01T10:02:00" },
+  { id:4, name:"Spam - reklama",        enabled:true, condition:{field:"subject", operator:"contains", value:"reklama"},     action:{type:"skip_analysis", value:"true"},           triggerCount:0, createdAt:"2026-06-01T10:03:00" },
+  { id:5, name:"Zwroty - słowo klucz",  enabled:true, condition:{field:"any",     operator:"contains", value:"zwrócić"},     action:{type:"set_category",  value:"Zwrot"},           triggerCount:0, createdAt:"2026-06-01T10:04:00" },
+  { id:6, name:"Reklamacje - uszkodzony",enabled:true,condition:{field:"any",     operator:"contains", value:"uszkodzony"},  action:{type:"set_category",  value:"Reklamacja"},      triggerCount:0, createdAt:"2026-06-01T10:05:00" }
+];
+
+let rulesData = [];
+let ruleEditingId = null;
+
+function rulesLoad() {
+  const raw = localStorage.getItem(RULES_KEY);
+  rulesData = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(RULES_DEFAULT));
+  if (!raw) rulesSave();
+}
+
+function rulesSave() {
+  localStorage.setItem(RULES_KEY, JSON.stringify(rulesData));
+}
+
+function rulesNextId() {
+  return rulesData.length ? Math.max(...rulesData.map(r => r.id)) + 1 : 1;
+}
+
+// ---- condition matching ----
+function ruleMatchesEmail(rule, email) {
+  if (!rule.enabled) return false;
+  const { field, operator, value } = rule.condition;
+  const v = value.toLowerCase();
+
+  function checkStr(s) {
+    s = (s || '').toLowerCase();
+    switch (operator) {
+      case 'contains':     return s.includes(v);
+      case 'not_contains': return !s.includes(v);
+      case 'starts_with':  return s.startsWith(v);
+      case 'ends_with':    return s.endsWith(v);
+      default: return false;
+    }
+  }
+
+  if (field === 'subject') return checkStr(email.subject);
+  if (field === 'body')    return checkStr(email.body);
+  if (field === 'from')    return checkStr(email.from);
+  if (field === 'any')     return checkStr(email.subject) || checkStr(email.body) || checkStr(email.from);
+  return false;
+}
+
+// ---- apply rules before AI ----
+// Returns { skip: bool } — if skip:true the email should not be sent to AI
+function applyRules(email) {
+  rulesLoad();
+  email.appliedRules = email.appliedRules || [];
+  let skip = false;
+
+  for (const rule of rulesData) {
+    if (!ruleMatchesEmail(rule, email)) continue;
+    rule.triggerCount = (rule.triggerCount || 0) + 1;
+    email.appliedRules.push(rule.name);
+
+    const { type, value } = rule.action;
+    if (type === 'set_priority')    email.priority = value;
+    if (type === 'set_category')    email.category  = value;
+    if (type === 'set_no_autoreply'){ email.canAutoReply = false; email.needsHumanReview = true; }
+    if (type === 'add_tag')         { email.tags = email.tags || []; if (!email.tags.includes(value)) email.tags.push(value); }
+    if (type === 'skip_analysis')   skip = true;
+  }
+
+  rulesSave();
+  return { skip };
+}
+
+// ---- render rules list ----
+const FIELD_LABELS    = { any:'Dowolne pole', subject:'Temat', body:'Treść', from:'Nadawca' };
+const OPERATOR_LABELS = { contains:'zawiera', not_contains:'nie zawiera', starts_with:'zaczyna się od', ends_with:'kończy się na' };
+const ACTION_LABELS   = { set_priority:'Ustaw priorytet', set_category:'Ustaw kategorię', set_no_autoreply:'Oznacz ręczna odpowiedź', skip_analysis:'Pomiń analizę AI', add_tag:'Dodaj tag' };
+const PRIORITY_LABELS = { wysoki:'Wysoki', sredni:'Średni', niski:'Niski' };
+
+function ruleCondDesc(rule) {
+  const { field, operator, value } = rule.condition;
+  return `${FIELD_LABELS[field] || field} ${OPERATOR_LABELS[operator] || operator} "${escHtml(value)}"`;
+}
+
+function ruleActionDesc(rule) {
+  const { type, value } = rule.action;
+  const label = ACTION_LABELS[type] || type;
+  if (type === 'set_priority') return `${label}: ${PRIORITY_LABELS[value] || value}`;
+  if (type === 'set_category') return `${label}: ${value}`;
+  if (type === 'skip_analysis' || type === 'set_no_autoreply') return label;
+  return `${label}: ${value}`;
+}
+
+function renderRules() {
+  rulesLoad();
+  const active  = rulesData.filter(r => r.enabled).length;
+  const totalTriggers = rulesData.reduce((s, r) => s + (r.triggerCount || 0), 0);
+  document.getElementById('rulesStatsBar').textContent =
+    `${rulesData.length} reguł • ${active} aktywne • Łącznie uruchomione: ${totalTriggers} razy`;
+
+  const list = document.getElementById('rulesList');
+  if (!rulesData.length) {
+    list.innerHTML = '<div class="no-emails">Brak reguł. Kliknij "+ Nowa reguła" aby dodać.</div>';
+    return;
+  }
+
+  list.innerHTML = rulesData.map(rule => `
+    <div class="rule-card ${rule.enabled ? '' : 'disabled'}">
+      <input type="checkbox" class="rule-toggle" ${rule.enabled ? 'checked' : ''}
+        onchange="toggleRule(${rule.id}, this.checked)">
+      <div class="rule-body">
+        <div class="rule-name">${escHtml(rule.name)}</div>
+        <div class="rule-desc">
+          <span class="rule-cond-badge">${ruleCondDesc(rule)}</span>
+          <span class="rule-arrow">→</span>
+          <span class="rule-action-badge">${ruleActionDesc(rule)}</span>
+        </div>
+      </div>
+      <div class="rule-trigger">${rule.triggerCount ? `🔥 ${rule.triggerCount} razy` : '–'}</div>
+      <div class="rule-actions-btns">
+        <button class="btn-sm" onclick="openRuleEditor(${rule.id})">✏️ Edytuj</button>
+        <button class="btn-sm danger" onclick="deleteRule(${rule.id})">🗑</button>
+      </div>
+    </div>`).join('');
+}
+
+function toggleRule(id, enabled) {
+  rulesLoad();
+  const rule = rulesData.find(r => r.id === id);
+  if (rule) { rule.enabled = enabled; rulesSave(); renderRules(); }
+}
+
+function deleteRule(id) {
+  if (!confirm('Usunąć tę regułę?')) return;
+  rulesLoad();
+  rulesData = rulesData.filter(r => r.id !== id);
+  rulesSave();
+  renderRules();
+  showToast('🗑 Reguła usunięta');
+}
+
+// ---- rule editor modal ----
+const ACTION_VALUE_OPTIONS = {
+  set_priority: `<select class="rule-select" id="ruleActionValue" onchange="updateRulePreview()">
+    <option value="wysoki">Wysoki</option><option value="sredni">Średni</option><option value="niski">Niski</option></select>`,
+  set_category: `<select class="rule-select" id="ruleActionValue" onchange="updateRulePreview()">
+    <option>Zwrot</option><option>Reklamacja</option><option>Zapytanie</option><option>Oferta biznesowa</option><option>Inne</option></select>`,
+  set_no_autoreply: '',
+  skip_analysis: '',
+  add_tag: `<input class="rule-input" id="ruleActionValue" placeholder="nazwa tagu..." oninput="updateRulePreview()">`
+};
+
+function openRuleEditor(id) {
+  rulesLoad();
+  ruleEditingId = id;
+  const rule = id ? rulesData.find(r => r.id === id) : null;
+  document.getElementById('ruleModalTitle').textContent = rule ? '✏️ Edytuj regułę' : '+ Nowa reguła';
+  document.getElementById('ruleName').value          = rule ? rule.name : '';
+  document.getElementById('ruleField').value         = rule ? rule.condition.field    : 'any';
+  document.getElementById('ruleOperator').value      = rule ? rule.condition.operator : 'contains';
+  document.getElementById('ruleCondValue').value     = rule ? rule.condition.value    : '';
+  document.getElementById('ruleActionType').value    = rule ? rule.action.type        : 'set_priority';
+  onRuleActionChange(rule ? rule.action.value : null);
+  document.getElementById('ruleModal').classList.add('active');
+  updateRulePreview();
+}
+
+function onRuleActionChange(presetValue) {
+  const type = document.getElementById('ruleActionType').value;
+  const wrap = document.getElementById('ruleActionValueWrap');
+  const html = ACTION_VALUE_OPTIONS[type];
+  if (html) {
+    wrap.style.display = '';
+    wrap.innerHTML = `<label class="form-label" style="font-size:10px">Wartość</label>${html}`;
+    if (presetValue && document.getElementById('ruleActionValue')) {
+      document.getElementById('ruleActionValue').value = presetValue;
+    }
+  } else {
+    wrap.style.display = 'none';
+    wrap.innerHTML = '';
+  }
+  updateRulePreview();
+}
+
+function updateRulePreview() {
+  const field    = document.getElementById('ruleField')?.value || '';
+  const operator = document.getElementById('ruleOperator')?.value || '';
+  const condVal  = document.getElementById('ruleCondValue')?.value || '…';
+  const type     = document.getElementById('ruleActionType')?.value || '';
+  const actValEl = document.getElementById('ruleActionValue');
+  const actVal   = actValEl ? actValEl.value : '';
+
+  const cond   = `${FIELD_LABELS[field]||field} <strong>${OPERATOR_LABELS[operator]||operator}</strong> "${escHtml(condVal)}"`;
+  const action = type === 'skip_analysis' || type === 'set_no_autoreply'
+    ? `<strong>${ACTION_LABELS[type]}</strong>`
+    : `<strong>${ACTION_LABELS[type]||type}</strong>${actVal ? ': ' + escHtml(actVal) : ''}`;
+
+  const el = document.getElementById('rulePreview');
+  if (el) el.innerHTML = `Jeśli ${cond} → ${action}`;
+}
+
+function saveRule() {
+  rulesLoad();
+  const name     = document.getElementById('ruleName').value.trim();
+  const field    = document.getElementById('ruleField').value;
+  const operator = document.getElementById('ruleOperator').value;
+  const condVal  = document.getElementById('ruleCondValue').value.trim();
+  const type     = document.getElementById('ruleActionType').value;
+  const actValEl = document.getElementById('ruleActionValue');
+  const actVal   = actValEl ? actValEl.value : 'true';
+
+  if (!name || !condVal) { showToast('⚠️ Wypełnij nazwę i wartość warunku', 'var(--yellow)'); return; }
+
+  if (ruleEditingId) {
+    const rule = rulesData.find(r => r.id === ruleEditingId);
+    if (rule) {
+      rule.name = name;
+      rule.condition = { field, operator, value: condVal };
+      rule.action    = { type, value: actVal };
+    }
+  } else {
+    rulesData.push({ id: rulesNextId(), name, enabled: true,
+      condition: { field, operator, value: condVal },
+      action:    { type, value: actVal },
+      triggerCount: 0, createdAt: new Date().toISOString() });
+  }
+
+  rulesSave();
+  closeModal('ruleModal');
+  renderRules();
+  showToast('✅ Reguła zapisana');
+}
+
+// ============================================================
+// KNOWLEDGE BASE
+// ============================================================
+const KB_KEY = 'mailanalyzer_kb';
+const KB_DEFAULT = [
+  { id:1,  category:"Zwroty",      question:"Jak zwrócić towar?",                              answer:"Klient ma 14 dni na zwrot od daty otrzymania towaru. Należy wypełnić formularz zwrotu dostępny na stronie i odesłać produkt na adres: ul. Magazynowa 1, 80-001 Gdańsk. Zwrot pieniędzy następuje w ciągu 7 dni roboczych od otrzymania przesyłki.", keywords:["zwrot","odesłać","oddać","nie chcę"],            createdAt:"2026-06-01T10:00:00" },
+  { id:2,  category:"Zwroty",      question:"Czy mogę zwrócić produkt bez paragonu?",          answer:"Tak, do zwrotu wystarczy numer zamówienia. Paragon nie jest wymagany.",                                                                                                                                                                          keywords:["paragon","bez paragonu","rachunek"],             createdAt:"2026-06-01T10:01:00" },
+  { id:3,  category:"Reklamacje",  question:"Jak złożyć reklamację?",                          answer:"Reklamację można złożyć mailowo na adres reklamacje@sklep.pl lub przez formularz na stronie. Do reklamacji należy dołączyć zdjęcia uszkodzonego produktu i numer zamówienia. Czas rozpatrzenia to 14 dni roboczych.",                           keywords:["reklamacja","uszkodzony","nie działa","zepsuty"],createdAt:"2026-06-01T10:02:00" },
+  { id:4,  category:"Reklamacje",  question:"Produkt przestał działać po gwarancji",           answer:"Po upływie gwarancji oferujemy płatny serwis. Koszt wyceny to 50 zł. Prosimy o kontakt na serwis@sklep.pl",                                                                                                                                   keywords:["po gwarancji","serwis","naprawa"],               createdAt:"2026-06-01T10:03:00" },
+  { id:5,  category:"Dostawa",     question:"Ile trwa dostawa?",                               answer:"Standardowa dostawa trwa 2-3 dni robocze. Dostawa ekspresowa (następny dzień roboczy) dostępna za dopłatą 15 zł. Zamówienia złożone do 14:00 wysyłamy tego samego dnia.",                                                                     keywords:["dostawa","kiedy","ile czeka","paczka"],          createdAt:"2026-06-01T10:04:00" },
+  { id:6,  category:"Dostawa",     question:"Czy możliwy odbiór osobisty?",                    answer:"Tak, odbiór osobisty możliwy w punkcie przy ul. Handlowej 5, Gdańsk, od poniedziałku do piątku 9:00-17:00.",                                                                                                                                  keywords:["odbiór","osobisty","sklep stacjonarny"],         createdAt:"2026-06-01T10:05:00" },
+  { id:7,  category:"Płatności",   question:"Jakie metody płatności akceptujecie?",            answer:"Akceptujemy: karty płatnicze (Visa, Mastercard), BLIK, przelew bankowy, PayPal oraz płatność przy odbiorze (za pobraniem, dopłata 5 zł).",                                                                                                    keywords:["płatność","karta","blik","przelew"],             createdAt:"2026-06-01T10:06:00" },
+  { id:8,  category:"Płatności",   question:"Czy wystawiacie faktury VAT?",                    answer:"Tak, faktury VAT wystawiamy na życzenie. Należy podać dane firmy i NIP przy składaniu zamówienia lub przesłać je mailowo po zakupie.",                                                                                                         keywords:["faktura","VAT","NIP","firma"],                   createdAt:"2026-06-01T10:07:00" },
+  { id:9,  category:"Produkty",    question:"Czy produkty są oryginalne?",                     answer:"Wszystkie produkty w naszym sklepie są oryginalne i posiadają certyfikaty autentyczności. Współpracujemy wyłącznie z autoryzowanymi dystrybutorami.",                                                                                          keywords:["oryginalny","podróbka","certyfikat","autentyczny"],createdAt:"2026-06-01T10:08:00" },
+  { id:10, category:"Produkty",    question:"Czy mogę zamówić produkt którego nie ma w magazynie?", answer:"Tak, możliwe jest zamówienie przedsprzedażowe. Czas oczekiwania zależy od produktu - informujemy o tym na stronie produktu. Możesz też zapisać się na powiadomienie o dostępności.",                                                   keywords:["niedostępny","brak","kiedy będzie","powiadomienie"],createdAt:"2026-06-01T10:09:00" }
+];
+const KB_CATEGORIES = ["Zwroty","Reklamacje","Dostawa","Płatności","Produkty","Inne"];
+
+let kbEntries = [];
+let kbSelectedId = null;
+let kbEditingKeywords = [];
+
+function kbLoad() {
+  const raw = localStorage.getItem(KB_KEY);
+  kbEntries = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(KB_DEFAULT));
+  if (!raw) kbSave();
+}
+
+function kbSave() {
+  localStorage.setItem(KB_KEY, JSON.stringify(kbEntries));
+}
+
+function kbNextId() {
+  return kbEntries.length ? Math.max(...kbEntries.map(e => e.id)) + 1 : 1;
+}
+
+function getKBContext() {
+  kbLoad();
+  if (!kbEntries.length) return '';
+  const lines = kbEntries.map(e => `[${e.category}] ${e.question} → ${e.answer}`).join('\n');
+  return `BAZA WIEDZY SKLEPU:\n${lines}`;
+}
+
+function renderKBList() {
+  const q = (document.getElementById('kbSearch').value || '').toLowerCase();
+  const list = document.getElementById('kbList');
+
+  const matched = kbEntries.filter(e => {
+    if (!q) return true;
+    return e.question.toLowerCase().includes(q)
+        || e.answer.toLowerCase().includes(q)
+        || e.category.toLowerCase().includes(q)
+        || e.keywords.some(k => k.toLowerCase().includes(q));
+  });
+
+  // Stats
+  const cats = new Set(kbEntries.map(e => e.category)).size;
+  const lastUpdated = kbEntries.reduce((max, e) => e.createdAt > max ? e.createdAt : max, '');
+  const lastDate = lastUpdated ? new Date(lastUpdated).toLocaleDateString('pl-PL') : '—';
+  document.getElementById('kbStatsBar').textContent =
+    `${kbEntries.length} wpisów • ${cats} ${cats === 1 ? 'kategoria' : cats < 5 ? 'kategorie' : 'kategorii'} • Ostatnio zaktualizowano: ${lastDate}`;
+
+  if (matched.length === 0) {
+    list.innerHTML = '<div class="no-emails">Brak wyników wyszukiwania.</div>';
+    return;
+  }
+
+  function hl(text) {
+    if (!q) return escHtml(text);
+    const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
+    return escHtml(text).replace(re, '<mark class="kb-highlight">$1</mark>');
+  }
+
+  list.innerHTML = matched.map(e => `
+    <div class="kb-entry-card ${kbSelectedId === e.id ? 'selected' : ''}" onclick="kbSelectEntry(${e.id})">
+      <div class="kb-entry-card-top">
+        <span class="kb-cat-badge">${escHtml(e.category)}</span>
+        <span class="kb-question">${hl(e.question)}</span>
+      </div>
+      <div class="kb-answer-preview">${hl(e.answer)}</div>
+      <div class="kb-keywords">${e.keywords.map(k => `<span class="kb-keyword-tag">${hl(k)}</span>`).join('')}</div>
+    </div>`).join('');
+}
+
+function kbSelectEntry(id) {
+  kbSelectedId = id;
+  const entry = kbEntries.find(e => e.id === id);
+  renderKBList();
+  if (!entry) return;
+  kbEditingKeywords = [...entry.keywords];
+  renderKBEditor(entry);
+}
+
+function kbNewEntry() {
+  kbSelectedId = null;
+  kbEditingKeywords = [];
+  renderKBList();
+  renderKBEditor(null);
+}
+
+function renderKBEditor(entry) {
+  const editor = document.getElementById('kbEditor');
+  const isNew = !entry;
+  const e = entry || { id: null, category: 'Zwroty', question: '', answer: '', keywords: [], createdAt: new Date().toISOString() };
+
+  const catOptions = KB_CATEGORIES.map(c =>
+    `<option value="${c}" ${c === e.category ? 'selected' : ''}>${c}</option>`
+  ).join('');
+
+  const tagsHtml = kbEditingKeywords.map((k, i) =>
+    `<span class="kb-tag">${escHtml(k)}<span class="kb-tag-remove" onclick="kbRemoveKeyword(${i})">×</span></span>`
+  ).join('');
+
+  editor.innerHTML = `
+    <div class="kb-editor-title">${isNew ? '➕ Nowy wpis' : '✏️ Edytuj wpis'}</div>
+
+    <div class="kb-form-group">
+      <label class="kb-form-label">Kategoria</label>
+      <select class="kb-select" id="kbCat">${catOptions}</select>
+    </div>
+
+    <div class="kb-form-group">
+      <label class="kb-form-label">Pytanie / temat</label>
+      <input class="kb-input" id="kbQuestion" value="${escHtml(e.question)}" placeholder="np. Jak zwrócić towar?">
+    </div>
+
+    <div class="kb-form-group">
+      <label class="kb-form-label">Odpowiedź</label>
+      <textarea class="kb-textarea" id="kbAnswer" style="min-height:150px">${escHtml(e.answer)}</textarea>
+    </div>
+
+    <div class="kb-form-group">
+      <label class="kb-form-label">Słowa kluczowe (Enter aby dodać)</label>
+      <div class="kb-tags-input-wrap" onclick="document.getElementById('kbTagInput').focus()">
+        <span id="kbTagsContainer">${tagsHtml}</span>
+        <input class="kb-tag-input" id="kbTagInput" placeholder="dodaj słowo..." onkeydown="kbTagKeydown(event)">
+      </div>
+    </div>
+
+    <div class="kb-editor-actions">
+      <button class="btn btn-primary" onclick="kbSaveEntry(${e.id || 'null'})">💾 Zapisz</button>
+      ${!isNew ? `<button class="btn btn-danger" onclick="kbDeleteEntry(${e.id})">🗑 Usuń</button>` : ''}
+      <button class="btn btn-ghost" onclick="kbCancelEdit()">Anuluj</button>
+    </div>`;
+}
+
+function kbTagKeydown(e) {
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    const val = e.target.value.trim().replace(/,$/, '');
+    if (val && !kbEditingKeywords.includes(val)) {
+      kbEditingKeywords.push(val);
+      e.target.value = '';
+      const container = document.getElementById('kbTagsContainer');
+      container.innerHTML = kbEditingKeywords.map((k, i) =>
+        `<span class="kb-tag">${escHtml(k)}<span class="kb-tag-remove" onclick="kbRemoveKeyword(${i})">×</span></span>`
+      ).join('');
+    }
+  }
+}
+
+function kbRemoveKeyword(idx) {
+  kbEditingKeywords.splice(idx, 1);
+  const container = document.getElementById('kbTagsContainer');
+  if (container) {
+    container.innerHTML = kbEditingKeywords.map((k, i) =>
+      `<span class="kb-tag">${escHtml(k)}<span class="kb-tag-remove" onclick="kbRemoveKeyword(${i})">×</span></span>`
+    ).join('');
+  }
+}
+
+function kbSaveEntry(id) {
+  const cat      = document.getElementById('kbCat').value;
+  const question = document.getElementById('kbQuestion').value.trim();
+  const answer   = document.getElementById('kbAnswer').value.trim();
+  if (!question || !answer) { showToast('⚠️ Wypełnij pytanie i odpowiedź', 'var(--yellow)'); return; }
+
+  if (id) {
+    const entry = kbEntries.find(e => e.id === id);
+    if (entry) { entry.category = cat; entry.question = question; entry.answer = answer; entry.keywords = [...kbEditingKeywords]; entry.createdAt = new Date().toISOString(); }
+  } else {
+    kbEntries.push({ id: kbNextId(), category: cat, question, answer, keywords: [...kbEditingKeywords], createdAt: new Date().toISOString() });
+    kbSelectedId = null;
+  }
+  kbSave();
+  showToast('✅ Wpis zapisany');
+  renderKBList();
+  document.getElementById('kbEditor').innerHTML = '<div class="kb-editor-empty"><div style="font-size:32px">✅</div><div>Zapisano!</div></div>';
+}
+
+function kbDeleteEntry(id) {
+  if (!confirm('Usunąć ten wpis z bazy wiedzy?')) return;
+  kbEntries = kbEntries.filter(e => e.id !== id);
+  kbSelectedId = null;
+  kbSave();
+  showToast('🗑 Wpis usunięty');
+  renderKBList();
+  document.getElementById('kbEditor').innerHTML = '<div class="kb-editor-empty"><div style="font-size:32px">🧠</div><div>Wybierz wpis aby edytować<br>lub kliknij <strong>+ Dodaj</strong></div></div>';
+}
+
+function kbCancelEdit() {
+  kbSelectedId = null;
+  kbEditingKeywords = [];
+  renderKBList();
+  document.getElementById('kbEditor').innerHTML = '<div class="kb-editor-empty"><div style="font-size:32px">🧠</div><div>Wybierz wpis aby edytować<br>lub kliknij <strong>+ Dodaj</strong></div></div>';
+}
+
+// ============================================================
+// DATE FILTER HANDLERS
+// ============================================================
+function onDateChange() {
+  currentDate = document.getElementById('dateFilter').value;
+  renderAll();
+}
+
+function onShowAllChange() {
+  showAllDates = document.getElementById('showAllDates').checked;
+  const dateInput = document.getElementById('dateFilter');
+  dateInput.disabled = showAllDates;
+  dateInput.style.opacity = showAllDates ? '0.4' : '1';
+  renderAll();
+}
+
+function setDateAndSwitchToList(dateStr) {
+  currentDate = dateStr;
+  showAllDates = false;
+  document.getElementById('dateFilter').value = dateStr;
+  document.getElementById('showAllDates').checked = false;
+  const dateInput = document.getElementById('dateFilter');
+  dateInput.disabled = false;
+  dateInput.style.opacity = '1';
+  setFilter('all');
+}
+
+// ============================================================
 // INIT
 // ============================================================
+// Clear any previously cached emails that had category pre-set
+(function() {
+  const cached = localStorage.getItem('crm_emails_generated');
+  if (cached) {
+    try {
+      const first = JSON.parse(cached)[0];
+      if (first && first.category !== null) {
+        localStorage.removeItem('crm_emails_generated');
+        emails = generateEmails();
+      }
+    } catch(e) {
+      localStorage.removeItem('crm_emails_generated');
+    }
+  }
+})();
+
+// Set date input default
+(function() {
+  const dateInput = document.getElementById('dateFilter');
+  // Use most recent date that has emails
+  const dates = [...new Set(emails.map(e => e.receivedAt.slice(0,10)))].sort();
+  currentDate = dates[dates.length - 1] || '2026-06-27';
+  dateInput.value = currentDate;
+})();
+
 renderAll();
 </script>
 </body>
