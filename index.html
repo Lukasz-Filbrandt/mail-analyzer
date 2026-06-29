@@ -876,6 +876,71 @@
   .sum-day-stats { font-size: 11px; color: var(--text-3); }
   .sum-quick-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 4px; }
 
+  /* ── WELCOME MODAL ───────────────────────────────────────── */
+  .welcome-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(8px);
+    z-index: 500;
+    display: none; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .welcome-overlay.active { display: flex; }
+
+  .welcome-modal {
+    background: var(--card);
+    border: 1px solid var(--border-light);
+    border-radius: 18px;
+    padding: 36px 32px 28px;
+    width: 100%; max-width: 580px;
+    max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+  }
+
+  .welcome-header { text-align: center; margin-bottom: 28px; }
+  .welcome-logo-icon {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: linear-gradient(135deg, var(--accent) 0%, #818cf8 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; margin: 0 auto 14px;
+    box-shadow: 0 4px 20px var(--accent-glow);
+  }
+  .welcome-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .welcome-badge {
+    display: inline-block; background: rgba(245,158,11,0.15);
+    color: var(--warning); border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 20px; padding: 3px 12px; font-size: 12px; font-weight: 600;
+  }
+
+  .welcome-section { margin-bottom: 22px; }
+  .welcome-section-title {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--text-3); margin-bottom: 10px;
+  }
+  .welcome-text { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+  .welcome-features { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .welcome-features li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 13px; color: var(--text-2);
+  }
+  .welcome-features li span:first-child { font-size: 15px; flex-shrink: 0; }
+
+  .welcome-divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  .welcome-contact-link {
+    color: var(--accent); text-decoration: none; font-weight: 500;
+  }
+  .welcome-contact-link:hover { text-decoration: underline; }
+
+  .welcome-footer { margin-top: 24px; }
+  .welcome-dont-show {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--text-3); cursor: pointer;
+    margin-top: 12px; justify-content: center;
+  }
+  .welcome-dont-show input { accent-color: var(--accent); cursor: pointer; }
+
   /* ── LOGO UPLOAD ─────────────────────────────────────────── */
   .logo-upload-area {
     border: 1.5px dashed var(--border-light);
@@ -1200,7 +1265,8 @@
   </div>
 
   <div class="topbar-actions">
-    <button class="btn btn-ghost" onclick="openSummaryModal()">📊 <span>Podsumowanie</span></button>
+    <button class="btn btn-ghost" onclick="openSummaryModal()">📊 <span data-i18n="summary">Podsumowanie</span></button>
+    <button class="btn btn-icon" onclick="openWelcomeModal()" data-i18n-title="about" title="O aplikacji">ℹ️</button>
     <button class="btn btn-icon" onclick="openSettingsModal()" title="Ustawienia">⚙️</button>
   </div>
 </div>
@@ -1210,29 +1276,29 @@
 
   <!-- SIDEBAR -->
   <div class="sidebar">
-    <div class="sidebar-title">Kategorie</div>
+    <div class="sidebar-title" data-i18n="categories">Kategorie</div>
     <button class="filter-btn active" id="filter-all" onclick="setFilter('all')">
-      <div class="filter-left"><div class="cat-dot" style="background:#888"></div>Wszystkie</div>
+      <div class="filter-left"><div class="cat-dot" style="background:#888"></div><span data-i18n="all">Wszystkie</span></div>
       <div class="count-badge" id="cnt-all">8</div>
     </button>
     <button class="filter-btn" id="filter-Zwrot" onclick="setFilter('Zwrot')">
-      <div class="filter-left"><div class="cat-dot" style="background:var(--zwrot)"></div>📦 Zwrot</div>
+      <div class="filter-left"><div class="cat-dot" style="background:var(--zwrot)"></div>📦 <span data-i18n="cat_zwrot">Zwrot</span></div>
       <div class="count-badge" id="cnt-Zwrot">0</div>
     </button>
     <button class="filter-btn" id="filter-Reklamacja" onclick="setFilter('Reklamacja')">
-      <div class="filter-left"><div class="cat-dot" style="background:var(--reklamacja)"></div>😤 Reklamacja</div>
+      <div class="filter-left"><div class="cat-dot" style="background:var(--reklamacja)"></div>😤 <span data-i18n="cat_reklamacja">Reklamacja</span></div>
       <div class="count-badge" id="cnt-Reklamacja">0</div>
     </button>
     <button class="filter-btn" id="filter-Zapytanie" onclick="setFilter('Zapytanie')">
-      <div class="filter-left"><div class="cat-dot" style="background:var(--zapytanie)"></div>❓ Zapytanie</div>
+      <div class="filter-left"><div class="cat-dot" style="background:var(--zapytanie)"></div>❓ <span data-i18n="cat_zapytanie">Zapytanie</span></div>
       <div class="count-badge" id="cnt-Zapytanie">0</div>
     </button>
     <button class="filter-btn" id="filter-Oferta biznesowa" onclick="setFilter('Oferta biznesowa')">
-      <div class="filter-left"><div class="cat-dot" style="background:var(--oferta)"></div>💼 Oferta biz.</div>
+      <div class="filter-left"><div class="cat-dot" style="background:var(--oferta)"></div>💼 <span data-i18n="cat_oferta">Oferta biz.</span></div>
       <div class="count-badge" id="cnt-Oferta biznesowa">0</div>
     </button>
     <button class="filter-btn" id="filter-Inne" onclick="setFilter('Inne')">
-      <div class="filter-left"><div class="cat-dot" style="background:var(--inne)"></div>✅ Inne</div>
+      <div class="filter-left"><div class="cat-dot" style="background:var(--inne)"></div>✅ <span data-i18n="cat_inne">Inne</span></div>
       <div class="count-badge" id="cnt-Inne">0</div>
     </button>
     <button class="filter-btn" id="filter-Spam" onclick="setFilter('Spam')">
@@ -1241,15 +1307,15 @@
     </button>
 
     <hr class="sidebar-divider">
-    <div class="sidebar-title">Widoki</div>
+    <div class="sidebar-title" data-i18n="views">Widoki</div>
     <button class="filter-btn" id="filter-calendar" onclick="setView('calendar')">
-      <div class="filter-left"><div class="cat-dot" style="background:var(--accent)"></div>📅 Kalendarz</div>
+      <div class="filter-left"><div class="cat-dot" style="background:var(--accent)"></div>📅 <span data-i18n="calendar">Kalendarz</span></div>
     </button>
     <button class="filter-btn" id="filter-kb" onclick="setView('kb')">
-      <div class="filter-left"><div class="cat-dot" style="background:#10b981"></div>🧠 Baza wiedzy</div>
+      <div class="filter-left"><div class="cat-dot" style="background:#10b981"></div>🧠 <span data-i18n="knowledgebase">Baza wiedzy</span></div>
     </button>
     <button class="filter-btn" id="filter-rules" onclick="setView('rules')">
-      <div class="filter-left"><div class="cat-dot" style="background:#eab308"></div>⚡ Reguły</div>
+      <div class="filter-left"><div class="cat-dot" style="background:#eab308"></div>⚡ <span data-i18n="rules">Reguły</span></div>
     </button>
   </div>
 
@@ -1341,26 +1407,26 @@
     <!-- Left nav -->
     <div class="settings-nav">
       <div class="settings-nav-title">
-        Ustawienia
+        <span data-i18n="settings">Ustawienia</span>
         <button class="btn-close" onclick="closeModal('settingsModal')" style="font-size:16px">×</button>
       </div>
       <button class="settings-nav-btn active" onclick="showSettingsSection('profile')">
-        <span class="settings-nav-icon">🏪</span> Profil sklepu
+        <span class="settings-nav-icon">🏪</span> <span data-i18n="s_profile">Profil sklepu</span>
       </button>
       <button class="settings-nav-btn" onclick="showSettingsSection('ai')">
-        <span class="settings-nav-icon">🤖</span> Analiza AI
+        <span class="settings-nav-icon">🤖</span> <span data-i18n="s_ai">Analiza AI</span>
       </button>
       <button class="settings-nav-btn" onclick="showSettingsSection('notifications')">
-        <span class="settings-nav-icon">🔔</span> Powiadomienia
+        <span class="settings-nav-icon">🔔</span> <span data-i18n="s_notif">Powiadomienia</span>
       </button>
       <button class="settings-nav-btn" onclick="showSettingsSection('data')">
-        <span class="settings-nav-icon">💾</span> Dane i prywatność
+        <span class="settings-nav-icon">💾</span> <span data-i18n="s_data">Dane i prywatność</span>
       </button>
       <button class="settings-nav-btn" onclick="showSettingsSection('api')">
         <span class="settings-nav-icon">🔑</span> API
       </button>
       <button class="settings-nav-btn" onclick="showSettingsSection('appearance')">
-        <span class="settings-nav-icon">🎨</span> Wygląd
+        <span class="settings-nav-icon">🎨</span> <span data-i18n="s_appearance">Wygląd</span>
       </button>
     </div>
 
@@ -1453,6 +1519,70 @@
   </div>
 </div>
 
+<!-- WELCOME MODAL -->
+<div class="welcome-overlay" id="welcomeModal">
+  <div class="welcome-modal">
+    <div class="welcome-header">
+      <div class="welcome-logo-icon">✉️</div>
+      <div class="welcome-title">Witaj w MailAnalyzer</div>
+      <span class="welcome-badge">Wersja Demo</span>
+    </div>
+
+    <div class="welcome-section">
+      <div class="welcome-section-title">ℹ️ Informacja o wersji demo</div>
+      <p class="welcome-text">Ta aplikacja jest wersją demonstracyjną systemu MailAnalyzer. Wszystkie prezentowane maile są sztucznie wygenerowane i nie pochodzą z prawdziwej skrzynki pocztowej. Aplikacja nie jest podłączona do żadnego zewnętrznego serwera pocztowego.</p>
+    </div>
+
+    <div class="welcome-section">
+      <div class="welcome-section-title">🚀 Co potrafi aplikacja</div>
+      <ul class="welcome-features">
+        <li><span>🤖</span><span>Automatyczna analiza i kategoryzacja maili przez AI</span></li>
+        <li><span>📊</span><span>Podział na kategorie: Zwroty, Reklamacje, Zapytania, Oferty, Spam</span></li>
+        <li><span>💬</span><span>Generowanie gotowych odpowiedzi na podstawie bazy wiedzy sklepu</span></li>
+        <li><span>🧠</span><span>Uczenie się z odpowiedzi pracowników i rozbudowa bazy wiedzy</span></li>
+        <li><span>⚡</span><span>Automatyczne reguły kategoryzacji i priorytetyzacji</span></li>
+        <li><span>📅</span><span>Widok kalendarza i wielodniowa analiza maili</span></li>
+        <li><span>📈</span><span>Podsumowania dzienne i tygodniowe generowane przez AI</span></li>
+      </ul>
+    </div>
+
+    <div class="welcome-section">
+      <div class="welcome-section-title">🔑 Wymagania</div>
+      <p class="welcome-text">Do działania analizy AI wymagany jest własny klucz API Anthropic. Możesz go dodać w ustawieniach <strong>⚙️</strong> po zamknięciu tego okna.</p>
+    </div>
+
+    <hr class="welcome-divider">
+
+    <div class="welcome-section" style="margin-bottom:0">
+      <div class="welcome-section-title">© Prawa autorskie</div>
+      <p class="welcome-text">© 2026 Łukasz Filbrandt. Wszelkie prawa zastrzeżone.<br>
+      Ta aplikacja jest własnością intelektualną autora i nie może być kopiowana ani rozpowszechniana bez zgody.</p>
+    </div>
+
+    <hr class="welcome-divider">
+
+    <div class="welcome-section" style="margin-bottom:0">
+      <div class="welcome-section-title">📬 Kontakt</div>
+      <p class="welcome-text">Zainteresowany wdrożeniem dla swojego sklepu? Skontaktuj się:<br>
+      <a class="welcome-contact-link" href="mailto:lfilbrandt@wp.pl">📧 lfilbrandt@wp.pl</a></p>
+    </div>
+
+    <div class="welcome-footer">
+      <div style="display:flex;gap:6px;justify-content:center;margin-bottom:16px">
+        <button class="prio-btn active" id="welcomeLangPL" onclick="setWelcomeLang('pl')" style="font-size:13px;padding:5px 14px">🇵🇱 Polski</button>
+        <button class="prio-btn"        id="welcomeLangEN" onclick="setWelcomeLang('en')" style="font-size:13px;padding:5px 14px">🇬🇧 English</button>
+      </div>
+      <button class="btn btn-primary" id="welcomeCloseBtn" style="width:100%;padding:12px;font-size:14px;justify-content:center" onclick="closeWelcomeModal()">
+        Rozumiem, przejdź do aplikacji
+      </button>
+      <label class="welcome-dont-show">
+        <input type="checkbox" id="dontShowAgain" checked>
+        <span id="welcomeDontShowLabel">Nie pokazuj ponownie przy następnej wizycie</span>
+      </label>
+    </div>
+  </div>
+</div>
+
 <!-- MANUAL REPLY MODAL -->
 <div class="modal-overlay" id="manualReplyModal" onclick="closeModalOnOverlay(event,'manualReplyModal')">
   <div class="modal" style="max-width:580px">
@@ -1486,7 +1616,7 @@
   <button class="btn" id="reAnalyzeBtn" onclick="reAnalyzeSelected()" style="padding:6px 13px;font-size:12px;display:none;background:rgba(245,158,11,0.15);color:#f59e0b;border:1px solid rgba(245,158,11,0.35)">
     <span id="reAnalyzeLabel">🔄 Przeanalizuj ponownie</span>
   </button>
-  <button class="btn btn-ghost" onclick="deselectAll()" style="padding:6px 11px;font-size:12px">Odznacz wszystkie</button>
+  <button class="btn btn-ghost" onclick="deselectAll()" style="padding:6px 11px;font-size:12px" data-i18n="deselect_all">Odznacz wszystkie</button>
 </div>
 
 <!-- TOAST -->
@@ -1786,12 +1916,12 @@ function renderList() {
   const unanalyzedInPool = categoryPool.filter(e => !e.analyzed).length;
   const prioFilterHtml = showPrioFilter ? `
     <div class="inline-prio-filter">
-      <span class="inline-prio-label">Priorytet:</span>
-      <button class="prio-btn ${currentPriorityFilter==='all'    ?'active':''}" onclick="setPriorityFilter('all')">Wszystkie</button>
-      <button class="prio-btn ${currentPriorityFilter==='wysoki' ?'active':''}" onclick="setPriorityFilter('wysoki')">🔴 Wysoki</button>
-      <button class="prio-btn ${currentPriorityFilter==='sredni' ?'active':''}" onclick="setPriorityFilter('sredni')">🟡 Średni</button>
-      <button class="prio-btn ${currentPriorityFilter==='niski'  ?'active':''}" onclick="setPriorityFilter('niski')">🟢 Niski</button>
-      ${!showAllDates && unanalyzedInPool > 0 ? `<button class="prio-btn ${currentPriorityFilter==='unanalyzed'?'active':''}" onclick="filterAndSelectUnanalyzed()" style="${currentPriorityFilter==='unanalyzed'?'color:var(--warning)':''}">⏳ Nieprzeanalizowane (${unanalyzedInPool})</button>` : ''}
+      <span class="inline-prio-label">${t('priority')}:</span>
+      <button class="prio-btn ${currentPriorityFilter==='all'    ?'active':''}" onclick="setPriorityFilter('all')">${t('prio_all')}</button>
+      <button class="prio-btn ${currentPriorityFilter==='wysoki' ?'active':''}" onclick="setPriorityFilter('wysoki')">${t('prio_high')}</button>
+      <button class="prio-btn ${currentPriorityFilter==='sredni' ?'active':''}" onclick="setPriorityFilter('sredni')">${t('prio_mid')}</button>
+      <button class="prio-btn ${currentPriorityFilter==='niski'  ?'active':''}" onclick="setPriorityFilter('niski')">${t('prio_low')}</button>
+      ${!showAllDates && unanalyzedInPool > 0 ? `<button class="prio-btn ${currentPriorityFilter==='unanalyzed'?'active':''}" onclick="filterAndSelectUnanalyzed()" style="${currentPriorityFilter==='unanalyzed'?'color:var(--warning)':''}">${t('prio_unanalyzed')} (${unanalyzedInPool})</button>` : ''}
     </div>` : '';
 
   // Apply priority / unanalyzed filter
@@ -1820,11 +1950,11 @@ function renderList() {
   const selectAllHtml = !showAllDates && !q ? `
     <div class="select-all-row" onclick="selectAllVisible()">
       <input type="checkbox" class="email-cb" ${allVisibleSel ? 'checked' : ''} onclick="event.stopPropagation();selectAllVisible()" style="opacity:1">
-      <span>Zaznacz wszystkie (${filtered.length})</span>
+      <span>${t('select_all_visible')} (${filtered.length})</span>
     </div>
     <div class="select-all-row" onclick="selectAll()" style="${unanalyzedVisible.length === 0 ? 'opacity:0.4;cursor:default;pointer-events:none' : ''}">
       <input type="checkbox" class="email-cb" ${allUnanalyzedSel && unanalyzedVisible.length > 0 ? 'checked' : ''} onclick="event.stopPropagation();selectAll()" style="opacity:1" ${unanalyzedVisible.length === 0 ? 'disabled' : ''}>
-      <span>Zaznacz nieprzeanalizowane (${unanalyzedVisible.length})</span>
+      <span>${t('select_unanalyzed')} (${unanalyzedVisible.length})</span>
     </div>` : '';
 
   if (filtered.length === 0) {
@@ -1868,7 +1998,7 @@ function renderList() {
         <div class="email-time">${formatTime(email.receivedAt)}</div>
       </div>
       <div class="email-subject" ${isSpam?'style="text-decoration:line-through;color:var(--text-3)"':''}>${subjectDisplay}</div>
-      <div class="email-summary ${email.analyzed?'':'pending'}">${isSpam ? 'Wiadomość spam' : (email.summary ? escHtml(email.summary) : 'Kliknij „Analizuj" aby przetworzyć ten mail')}</div>
+      <div class="email-summary ${email.analyzed?'':'pending'}">${isSpam ? 'Wiadomość spam' : (email.summary ? escHtml(email.summary) : t('not_analyzed'))}</div>
       <div class="email-badges">
         ${email.category ? `<span class="badge badge-${cc}">${catIcon(email.category)} ${email.category}</span>` : ''}
         ${email.priority && !isSpam ? `<span class="badge badge-${email.priority}">${email.priority === 'wysoki' ? '🔴' : email.priority === 'sredni' ? '🟡' : '🟢'} ${email.priority}</span>` : ''}
@@ -2547,22 +2677,22 @@ function showSettingsSection(section) {
 
 function buildSettingsSection(section, s) {
   if (section === 'profile') return `
-    <div class="settings-section-title">🏪 Profil sklepu</div>
-    <div class="settings-section-desc">Dane sklepu używane w generowanych odpowiedziach i kontekście AI.</div>
+    <div class="settings-section-title">🏪 ${t('s_profile')}</div>
+    <div class="settings-section-desc">${t('s_profile_desc')}</div>
     <div class="settings-group">
-      <label class="settings-label">Nazwa sklepu</label>
+      <label class="settings-label">${t('s_store_name')}</label>
       <input class="settings-input" id="s-storeName" value="${escHtml(s.storeName)}" oninput="saveSetting('storeName',this.value)">
     </div>
     <div class="settings-group">
-      <label class="settings-label">Email sklepu</label>
+      <label class="settings-label">${t('s_store_email')}</label>
       <input class="settings-input" id="s-storeEmail" type="email" value="${escHtml(s.storeEmail)}" oninput="saveSetting('storeEmail',this.value)">
     </div>
     <div class="settings-group">
-      <label class="settings-label">Adres sklepu</label>
+      <label class="settings-label">${t('s_store_address')}</label>
       <input class="settings-input" id="s-storeAddress" value="${escHtml(s.storeAddress)}" oninput="saveSetting('storeAddress',this.value)">
     </div>
     <div class="settings-group">
-      <label class="settings-label">Logo sklepu</label>
+      <label class="settings-label">${t('s_logo')}</label>
       ${s.storeLogo ? `
         <div class="logo-preview-box">
           <img src="${s.storeLogo}" alt="Logo">
@@ -2584,67 +2714,68 @@ function buildSettingsSection(section, s) {
     </div>`;
 
   if (section === 'ai') return `
-    <div class="settings-section-title">🤖 Analiza AI</div>
-    <div class="settings-section-desc">Konfiguracja zachowania modelu podczas analizy maili.</div>
+    <div class="settings-section-title">🤖 ${t('s_ai')}</div>
+    <div class="settings-section-desc">${t('s_ai_desc')}</div>
     <div class="settings-group">
-      <label class="settings-label">Język odpowiedzi</label>
+      <label class="settings-label">${t('s_ai_reply_lang')}</label>
       <select class="settings-select" onchange="saveSetting('replyLang',this.value)">
         <option value="pl" ${s.replyLang==='pl'?'selected':''}>🇵🇱 Polski</option>
-        <option value="en" ${s.replyLang==='en'?'selected':''}>🇬🇧 Angielski</option>
+        <option value="en" ${s.replyLang==='en'?'selected':''}>🇬🇧 English</option>
       </select>
+      <div style="font-size:11px;color:var(--text-3);margin-top:4px">${t('s_ai_reply_lang_desc')}</div>
     </div>
     <div class="settings-group">
-      <label class="settings-label">Ton odpowiedzi</label>
+      <label class="settings-label">${t('s_reply_tone')}</label>
       <select class="settings-select" onchange="saveSetting('replyTone',this.value)">
-        <option value="formal"   ${s.replyTone==='formal'  ?'selected':''}>🎩 Formalny</option>
-        <option value="neutral"  ${s.replyTone==='neutral' ?'selected':''}>😐 Neutralny</option>
-        <option value="friendly" ${s.replyTone==='friendly'?'selected':''}>😊 Przyjazny</option>
+        <option value="formal"   ${s.replyTone==='formal'  ?'selected':''}>🎩 ${t('tone_formal')}</option>
+        <option value="neutral"  ${s.replyTone==='neutral' ?'selected':''}>😐 ${t('tone_neutral')}</option>
+        <option value="friendly" ${s.replyTone==='friendly'?'selected':''}>😊 ${t('tone_friendly')}</option>
       </select>
-      <div style="font-size:11px;color:var(--text-3);margin-top:4px">Wpływa na styl generowanych odpowiedzi.</div>
+      <div style="font-size:11px;color:var(--text-3);margin-top:4px">${t('s_reply_tone_desc')}</div>
     </div>
     <div class="settings-group">
-      <label class="settings-label">Max maili na raz: <strong id="batchLabel">${s.maxBatch}</strong></label>
+      <label class="settings-label">${t('s_max_batch')}: <strong id="batchLabel">${s.maxBatch}</strong></label>
       <input type="range" class="settings-slider" min="5" max="50" value="${s.maxBatch}"
         oninput="document.getElementById('batchLabel').textContent=this.value;saveSetting('maxBatch',+this.value)">
       <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-3);margin-top:2px"><span>5</span><span>50</span></div>
     </div>
     <hr class="settings-divider">
     <div class="settings-row">
-      <div><div class="settings-row-label">Automatyczna analiza</div><div class="settings-row-desc">Analizuj nowe maile automatycznie po załadowaniu dnia</div></div>
+      <div><div class="settings-row-label">${t('s_auto_analyze')}</div><div class="settings-row-desc">${t('s_auto_analyze_desc')}</div></div>
       <input type="checkbox" class="toggle-switch" ${s.autoAnalyze?'checked':''} onchange="saveSetting('autoAnalyze',this.checked)">
     </div>`;
 
   if (section === 'notifications') return `
-    <div class="settings-section-title">🔔 Powiadomienia</div>
-    <div class="settings-section-desc">Powiadomienia przeglądarki dla ważnych zdarzeń.</div>
+    <div class="settings-section-title">🔔 ${t('s_notif')}</div>
+    <div class="settings-section-desc">${t('s_notif_desc')}</div>
     <div class="settings-row">
-      <div><div class="settings-row-label">Maile wysokiego priorytetu</div><div class="settings-row-desc">Powiadom gdy wykryto mail z priorytetem Wysoki</div></div>
+      <div><div class="settings-row-label">${t('s_notif_high')}</div><div class="settings-row-desc">${t('s_notif_high_desc')}</div></div>
       <input type="checkbox" class="toggle-switch" ${s.notifyHighPriority?'checked':''} onchange="toggleNotification('notifyHighPriority',this)">
     </div>
     <div class="settings-row">
-      <div><div class="settings-row-label">Nowe reklamacje</div><div class="settings-row-desc">Powiadom gdy mail sklasyfikowany jako Reklamacja</div></div>
+      <div><div class="settings-row-label">${t('s_notif_complaints')}</div><div class="settings-row-desc">${t('s_notif_complaints_desc')}</div></div>
       <input type="checkbox" class="toggle-switch" ${s.notifyComplaints?'checked':''} onchange="toggleNotification('notifyComplaints',this)">
     </div>
     <div id="notif-status" style="margin-top:16px;font-size:12px;color:var(--text-3)"></div>`;
 
   if (section === 'data') return `
-    <div class="settings-section-title">💾 Dane i prywatność</div>
-    <div class="settings-section-desc">Zarządzaj danymi aplikacji przechowywanymi lokalnie.</div>
+    <div class="settings-section-title">💾 ${t('s_data')}</div>
+    <div class="settings-section-desc">${t('s_data_desc')}</div>
     <hr class="settings-divider">
     <div class="settings-row">
-      <div><div class="settings-row-label">Eksportuj wszystkie dane</div><div class="settings-row-desc">Pobierz plik JSON z mailami, bazą wiedzy i regułami</div></div>
-      <button class="btn btn-ghost" style="font-size:12px;padding:6px 12px" onclick="exportAllData()">⬇ Eksportuj</button>
+      <div><div class="settings-row-label">${t('s_export')}</div><div class="settings-row-desc">${t('s_export_desc')}</div></div>
+      <button class="btn btn-ghost" style="font-size:12px;padding:6px 12px" onclick="exportAllData()">⬇ ${t('s_export_btn')}</button>
     </div>
     <div class="settings-row">
-      <div><div class="settings-row-label">Wyczyść analizę</div><div class="settings-row-desc">Usuń wyniki analizy AI, zachowaj treść maili</div></div>
-      <button class="btn btn-ghost" style="font-size:12px;padding:6px 12px" onclick="resetAnalysis()">🔄 Wyczyść</button>
+      <div><div class="settings-row-label">${t('s_clear_analysis')}</div><div class="settings-row-desc">${t('s_clear_analysis_desc')}</div></div>
+      <button class="btn btn-ghost" style="font-size:12px;padding:6px 12px" onclick="resetAnalysis()">🔄 ${t('s_clear_btn')}</button>
     </div>
     <div class="settings-row">
-      <div><div class="settings-row-label">Regeneruj maile</div><div class="settings-row-desc">Wygeneruj nowe losowe maile demo</div></div>
-      <button class="btn btn-ghost" style="font-size:12px;padding:6px 12px" onclick="resetEmails()">🔄 Regeneruj</button>
+      <div><div class="settings-row-label">${t('s_regen_emails')}</div><div class="settings-row-desc">${t('s_regen_emails_desc')}</div></div>
+      <button class="btn btn-ghost" style="font-size:12px;padding:6px 12px" onclick="resetEmails()">🔄 ${t('s_regen_btn')}</button>
     </div>
     <div class="settings-row">
-      <div><div class="settings-row-label" style="color:var(--danger)">Reset aplikacji</div><div class="settings-row-desc">Usuwa WSZYSTKIE dane localStorage — nieodwracalne</div></div>
+      <div><div class="settings-row-label" style="color:var(--danger)">${t('s_reset_app')}</div><div class="settings-row-desc">${t('s_reset_app_desc')}</div></div>
       <button class="btn btn-danger" style="font-size:12px;padding:6px 12px" onclick="hardReset()">🗑 Reset</button>
     </div>`;
 
@@ -2653,9 +2784,9 @@ function buildSettingsSection(section, s) {
     const costEst = (analyzedCount * 0.0003).toFixed(4);
     return `
     <div class="settings-section-title">🔑 API Anthropic</div>
-    <div class="settings-section-desc">Klucz API przechowywany wyłącznie lokalnie w przeglądarce.</div>
+    <div class="settings-section-desc">${t('s_api_desc')}</div>
     <div class="settings-group">
-      <label class="settings-label">Klucz API</label>
+      <label class="settings-label">${t('s_api_key')}</label>
       <input type="password" class="settings-input" id="apiKeyInput" placeholder="sk-ant-..." value="${escHtml(getApiKey())}">
       <div style="font-size:11px;color:var(--text-3);margin-top:4px">Nigdy nie jest wysyłany na żaden serwer poza Anthropic API.</div>
     </div>
@@ -2671,23 +2802,30 @@ function buildSettingsSection(section, s) {
   }
 
   if (section === 'appearance') return `
-    <div class="settings-section-title">🎨 Wygląd</div>
-    <div class="settings-section-desc">Personalizacja interfejsu.</div>
+    <div class="settings-section-title">🎨 ${t('s_appearance')}</div>
+    <div class="settings-section-desc">${t('s_appearance_desc')}</div>
     <hr class="settings-divider">
     <div class="settings-row">
-      <div><div class="settings-row-label">Motyw</div><div class="settings-row-desc">Jasny lub ciemny interfejs</div></div>
+      <div><div class="settings-row-label">${t('s_ui_lang')}</div><div class="settings-row-desc">${t('s_ui_lang_desc')}</div></div>
       <div style="display:flex;gap:6px">
-        <button class="prio-btn ${s.theme==='dark'?'active':''}" onclick="setTheme('dark')">🌙 Ciemny</button>
-        <button class="prio-btn ${s.theme==='light'?'active':''}" onclick="setTheme('light')">☀️ Jasny</button>
+        <button class="prio-btn ${currentLang==='pl'?'active':''}" onclick="setLang('pl');showSettingsSection('appearance')">🇵🇱 Polski</button>
+        <button class="prio-btn ${currentLang==='en'?'active':''}" onclick="setLang('en');showSettingsSection('appearance')">🇬🇧 English</button>
+      </div>
+    </div>
+    <div class="settings-row">
+      <div><div class="settings-row-label">${t('s_theme')}</div><div class="settings-row-desc">${t('s_theme_desc')}</div></div>
+      <div style="display:flex;gap:6px">
+        <button class="prio-btn ${s.theme==='dark'?'active':''}" onclick="setTheme('dark')">🌙 ${t('theme_dark')}</button>
+        <button class="prio-btn ${s.theme==='light'?'active':''}" onclick="setTheme('light')">☀️ ${t('theme_light')}</button>
       </div>
     </div>
     <div class="settings-row" style="align-items:flex-start;gap:16px">
-      <div><div class="settings-row-label">Kolor akcentu</div><div class="settings-row-desc">Główny kolor interfejsu</div></div>
+      <div><div class="settings-row-label">${t('s_accent')}</div><div class="settings-row-desc">${t('s_accent_desc')}</div></div>
       <div class="accent-swatches">
         <div class="accent-swatch ${s.accentColor==='indigo'?'active':''}"  style="background:#6366f1" onclick="setAccentColor('indigo')"  title="Indigo"></div>
-        <div class="accent-swatch ${s.accentColor==='purple'?'active':''}"  style="background:#a855f7" onclick="setAccentColor('purple')"  title="Fioletowy"></div>
-        <div class="accent-swatch ${s.accentColor==='emerald'?'active':''}" style="background:#10b981" onclick="setAccentColor('emerald')" title="Zielony"></div>
-        <div class="accent-swatch ${s.accentColor==='rose'?'active':''}"    style="background:#f43f5e" onclick="setAccentColor('rose')"    title="Różowy"></div>
+        <div class="accent-swatch ${s.accentColor==='purple'?'active':''}"  style="background:#a855f7" onclick="setAccentColor('purple')"  title="${t('color_purple')}"></div>
+        <div class="accent-swatch ${s.accentColor==='emerald'?'active':''}" style="background:#10b981" onclick="setAccentColor('emerald')" title="${t('color_green')}"></div>
+        <div class="accent-swatch ${s.accentColor==='rose'?'active':''}"    style="background:#f43f5e" onclick="setAccentColor('rose')"    title="${t('color_rose')}"></div>
       </div>
     </div>`;
 
@@ -2852,6 +2990,21 @@ function resetAnalysis() {
 function resetEmails() {
   localStorage.removeItem(EMAILS_KEY);
   location.reload();
+}
+
+function openWelcomeModal() {
+  document.getElementById('welcomeModal').classList.add('active');
+  // Sync modal buttons and content to current language
+  document.getElementById('welcomeLangPL').classList.toggle('active', currentLang === 'pl');
+  document.getElementById('welcomeLangEN').classList.toggle('active', currentLang === 'en');
+  applyWelcomeTranslations(currentLang);
+}
+
+function closeWelcomeModal() {
+  document.getElementById('welcomeModal').classList.remove('active');
+  if (document.getElementById('dontShowAgain').checked) {
+    localStorage.setItem('ma_welcome_shown', '1');
+  }
 }
 
 function closeModal(id) {
@@ -3931,9 +4084,9 @@ function updateSelectionUI() {
   // Count label
   const countEl = document.getElementById('selectionBarCount');
   if (hasMix) {
-    countEl.innerHTML = `✓ Zaznaczono: <span style="color:var(--accent)">${count}</span> maili <span style="color:var(--text-3)">(${unanalyzedCount} nowych · ${analyzedCount} przeanalizowanych)</span>`;
+    countEl.innerHTML = `✓ ${t('selected')}: <span style="color:var(--accent)">${count}</span> ${t('emails_count')} <span style="color:var(--text-3)">(${unanalyzedCount} nowych · ${analyzedCount} przeanalizowanych)</span>`;
   } else {
-    countEl.innerHTML = `✓ Zaznaczono: <span style="color:var(--accent)">${count}</span> maili`;
+    countEl.innerHTML = `✓ ${t('selected')}: <span style="color:var(--accent)">${count}</span> ${t('emails_count')}`;
   }
 
   const newBtn  = document.getElementById('analyzeNewBtn');
@@ -4109,6 +4262,201 @@ async function analyzeSelected() {
 }
 
 // ============================================================
+// INTERNATIONALISATION (i18n)
+// ============================================================
+const TRANSLATIONS = {
+  pl: {
+    summary: 'Podsumowanie', about: 'O aplikacji',
+    categories: 'Kategorie', views: 'Widoki',
+    all: 'Wszystkie',
+    cat_zwrot: 'Zwrot', cat_reklamacja: 'Reklamacja', cat_zapytanie: 'Zapytanie',
+    cat_oferta: 'Oferta biz.', cat_inne: 'Inne',
+    calendar: 'Kalendarz', knowledgebase: 'Baza wiedzy', rules: 'Reguły',
+    deselect_all: 'Odznacz wszystkie',
+    search_placeholder: 'Szukaj po nadawcy, temacie lub treści...',
+    priority: 'Priorytet', prio_all: 'Wszystkie', prio_high: '🔴 Wysoki', prio_mid: '🟡 Średni', prio_low: '🟢 Niski', prio_unanalyzed: '⏳ Nieprzeanalizowane',
+    select_all_visible: 'Zaznacz wszystkie', select_unanalyzed: 'Zaznacz nieprzeanalizowane',
+    not_analyzed: 'Kliknij „Analizuj" aby przetworzyć ten mail',
+    no_emails_day: 'Brak maili w wybranym dniu', no_emails_cat: 'Brak maili w tej kategorii',
+    show_all_hint: 'Zaznacz „Wszystkie dni" aby zobaczyć całą skrzynkę.',
+    selected: 'Zaznaczono', emails_count: 'maili',
+    analyze_new: '⚡ Analizuj nowe', analyze_selected: '⚡ Analizuj zaznaczone',
+    reanalyze: '🔄 Przeanalizuj ponownie', reanalyze_short: '🔄 Ponów',
+    analyzing_progress: 'Analizuję',
+    // settings
+    settings: 'Ustawienia',
+    s_profile: 'Profil sklepu', s_ai: 'Analiza AI', s_notif: 'Powiadomienia',
+    s_data: 'Dane i prywatność', s_appearance: 'Wygląd',
+    s_profile_desc: 'Dane sklepu używane w generowanych odpowiedziach i kontekście AI.',
+    s_store_name: 'Nazwa sklepu', s_store_email: 'Email sklepu', s_store_address: 'Adres sklepu', s_logo: 'Logo sklepu',
+    s_ai_desc: 'Konfiguracja zachowania modelu podczas analizy maili.',
+    s_ai_reply_lang: 'JĘZYK ODPOWIEDZI AI', s_ai_reply_lang_desc: 'Język w którym AI generuje odpowiedzi na maile klientów.',
+    s_reply_tone: 'Ton odpowiedzi', s_reply_tone_desc: 'Wpływa na styl generowanych odpowiedzi.',
+    tone_formal: 'Formalny', tone_neutral: 'Neutralny', tone_friendly: 'Przyjazny',
+    s_max_batch: 'Max maili na raz', s_auto_analyze: 'Automatyczna analiza', s_auto_analyze_desc: 'Analizuj nowe maile automatycznie po załadowaniu dnia',
+    s_notif_desc: 'Powiadomienia przeglądarki dla ważnych zdarzeń.',
+    s_notif_high: 'Maile wysokiego priorytetu', s_notif_high_desc: 'Powiadom gdy wykryto mail z priorytetem Wysoki',
+    s_notif_complaints: 'Nowe reklamacje', s_notif_complaints_desc: 'Powiadom gdy mail sklasyfikowany jako Reklamacja',
+    s_data_desc: 'Zarządzaj danymi aplikacji przechowywanymi lokalnie.',
+    s_export: 'Eksportuj wszystkie dane', s_export_desc: 'Pobierz plik JSON z mailami, bazą wiedzy i regułami', s_export_btn: 'Eksportuj',
+    s_clear_analysis: 'Wyczyść analizę', s_clear_analysis_desc: 'Usuń wyniki analizy AI, zachowaj treść maili', s_clear_btn: 'Wyczyść',
+    s_regen_emails: 'Regeneruj maile', s_regen_emails_desc: 'Wygeneruj nowe losowe maile demo', s_regen_btn: 'Regeneruj',
+    s_reset_app: 'Reset aplikacji', s_reset_app_desc: 'Usuwa WSZYSTKIE dane localStorage — nieodwracalne',
+    s_api_desc: 'Klucz API przechowywany wyłącznie lokalnie w przeglądarce.', s_api_key: 'Klucz API',
+    s_appearance_desc: 'Personalizacja interfejsu.',
+    s_ui_lang: 'JĘZYK INTERFEJSU', s_ui_lang_desc: 'Język przycisków, etykiet i menu aplikacji.',
+    s_theme: 'Motyw', s_theme_desc: 'Jasny lub ciemny interfejs',
+    theme_dark: 'Ciemny', theme_light: 'Jasny',
+    s_accent: 'Kolor akcentu', s_accent_desc: 'Główny kolor interfejsu',
+    color_purple: 'Fioletowy', color_green: 'Zielony', color_rose: 'Różowy',
+    // welcome modal
+    w_title: 'Witaj w MailAnalyzer', w_badge: 'Wersja Demo',
+    w_info_title: 'Informacja o wersji demo',
+    w_info: 'Ta aplikacja jest wersją demonstracyjną systemu MailAnalyzer. Wszystkie prezentowane maile są sztucznie wygenerowane i nie pochodzą z prawdziwej skrzynki pocztowej. Aplikacja nie jest podłączona do żadnego zewnętrznego serwera pocztowego.',
+    w_features_title: 'Co potrafi aplikacja',
+    w_features: ['Automatyczna analiza i kategoryzacja maili przez AI','Podział na kategorie: Zwroty, Reklamacje, Zapytania, Oferty, Spam','Generowanie gotowych odpowiedzi na podstawie bazy wiedzy sklepu','Uczenie się z odpowiedzi pracowników i rozbudowa bazy wiedzy','Automatyczne reguły kategoryzacji i priorytetyzacji','Widok kalendarza i wielodniowa analiza maili','Podsumowania dzienne i tygodniowe generowane przez AI'],
+    w_req_title: 'Wymagania',
+    w_req: 'Do działania analizy AI wymagany jest własny klucz API Anthropic. Możesz go dodać w ustawieniach ⚙️ po zamknięciu tego okna.',
+    w_copy_title: 'Prawa autorskie',
+    w_copy: '© 2026 Łukasz Filbrandt. Wszelkie prawa zastrzeżone.\nTa aplikacja jest własnością intelektualną autora i nie może być kopiowana ani rozpowszechniana bez zgody.',
+    w_contact_title: 'Kontakt',
+    w_contact: 'Zainteresowany wdrożeniem dla swojego sklepu? Skontaktuj się:',
+    w_close_btn: 'Rozumiem, przejdź do aplikacji',
+    w_dont_show: 'Nie pokazuj ponownie przy następnej wizycie',
+  },
+  en: {
+    summary: 'Summary', about: 'About',
+    categories: 'Categories', views: 'Views',
+    all: 'All',
+    cat_zwrot: 'Return', cat_reklamacja: 'Complaint', cat_zapytanie: 'Inquiry',
+    cat_oferta: 'Business offer', cat_inne: 'Other',
+    calendar: 'Calendar', knowledgebase: 'Knowledge Base', rules: 'Rules',
+    deselect_all: 'Deselect all',
+    search_placeholder: 'Search by sender, subject or content...',
+    priority: 'Priority', prio_all: 'All', prio_high: '🔴 High', prio_mid: '🟡 Medium', prio_low: '🟢 Low', prio_unanalyzed: '⏳ Unanalyzed',
+    select_all_visible: 'Select all', select_unanalyzed: 'Select unanalyzed',
+    not_analyzed: 'Click "Analyze" to process this email',
+    no_emails_day: 'No emails on selected day', no_emails_cat: 'No emails in this category',
+    show_all_hint: 'Check "All days" to see the full inbox.',
+    selected: 'Selected', emails_count: 'emails',
+    analyze_new: '⚡ Analyze new', analyze_selected: '⚡ Analyze selected',
+    reanalyze: '🔄 Re-analyze', reanalyze_short: '🔄 Redo',
+    analyzing_progress: 'Analyzing',
+    // settings
+    settings: 'Settings',
+    s_profile: 'Store Profile', s_ai: 'AI Analysis', s_notif: 'Notifications',
+    s_data: 'Data & Privacy', s_appearance: 'Appearance',
+    s_profile_desc: 'Store data used in generated replies and AI context.',
+    s_store_name: 'Store name', s_store_email: 'Store email', s_store_address: 'Store address', s_logo: 'Store logo',
+    s_ai_desc: 'Configure the AI model behavior during email analysis.',
+    s_ai_reply_lang: 'AI REPLY LANGUAGE', s_ai_reply_lang_desc: 'Language in which AI generates replies to customer emails.',
+    s_reply_tone: 'Reply tone', s_reply_tone_desc: 'Affects the style of generated replies.',
+    tone_formal: 'Formal', tone_neutral: 'Neutral', tone_friendly: 'Friendly',
+    s_max_batch: 'Max emails at once', s_auto_analyze: 'Auto analysis', s_auto_analyze_desc: 'Automatically analyze new emails when day is loaded',
+    s_notif_desc: 'Browser notifications for important events.',
+    s_notif_high: 'High priority emails', s_notif_high_desc: 'Notify when a High priority email is detected',
+    s_notif_complaints: 'New complaints', s_notif_complaints_desc: 'Notify when an email is classified as Complaint',
+    s_data_desc: 'Manage application data stored locally.',
+    s_export: 'Export all data', s_export_desc: 'Download a JSON file with emails, knowledge base and rules', s_export_btn: 'Export',
+    s_clear_analysis: 'Clear analysis', s_clear_analysis_desc: 'Remove AI analysis results, keep email content', s_clear_btn: 'Clear',
+    s_regen_emails: 'Regenerate emails', s_regen_emails_desc: 'Generate new random demo emails', s_regen_btn: 'Regenerate',
+    s_reset_app: 'App reset', s_reset_app_desc: 'Deletes ALL localStorage data — irreversible',
+    s_api_desc: 'API key stored exclusively locally in the browser.', s_api_key: 'API key',
+    s_appearance_desc: 'Interface personalization.',
+    s_ui_lang: 'INTERFACE LANGUAGE', s_ui_lang_desc: 'Language of buttons, labels and app menus.',
+    s_theme: 'Theme', s_theme_desc: 'Light or dark interface',
+    theme_dark: 'Dark', theme_light: 'Light',
+    s_accent: 'Accent color', s_accent_desc: 'Main interface color',
+    color_purple: 'Purple', color_green: 'Green', color_rose: 'Rose',
+    // welcome modal
+    w_title: 'Welcome to MailAnalyzer', w_badge: 'Demo Version',
+    w_info_title: 'About the demo version',
+    w_info: 'This is a demonstration version of MailAnalyzer. All emails shown are artificially generated and do not come from a real mailbox. The application is not connected to any external mail server.',
+    w_features_title: 'What the app can do',
+    w_features: ['Automatic AI analysis and email categorization','Categories: Returns, Complaints, Inquiries, Offers, Spam','Auto-generated replies based on the store knowledge base','Learns from employee replies and expands knowledge base','Automatic categorization and prioritization rules','Calendar view and multi-day analysis','AI-generated daily and weekly summaries'],
+    w_req_title: 'Requirements',
+    w_req: 'AI analysis requires your own Anthropic API key. You can add it in settings ⚙️ after closing this window.',
+    w_copy_title: 'Copyright',
+    w_copy: '© 2026 Łukasz Filbrandt. All rights reserved.\nThis application is the intellectual property of the author and may not be copied or distributed without permission.',
+    w_contact_title: 'Contact',
+    w_contact: 'Interested in implementing this for your store? Contact me:',
+    w_close_btn: 'I understand, go to app',
+    w_dont_show: "Don't show again on next visit",
+  }
+};
+
+let currentLang = localStorage.getItem('ma_language') || 'pl';
+
+function t(key) {
+  return (TRANSLATIONS[currentLang] || TRANSLATIONS.pl)[key] || TRANSLATIONS.pl[key] || key;
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('ma_language', lang);
+  applyI18n();
+  renderList();
+  // Re-render appearance section if it's open so UI lang buttons update
+  if (activeSettingsSection === 'appearance' && document.getElementById('settingsModal')?.classList.contains('active')) {
+    showSettingsSection('appearance');
+  }
+  // Sync welcome modal buttons if modal is open
+  const plBtn = document.getElementById('welcomeLangPL');
+  const enBtn = document.getElementById('welcomeLangEN');
+  if (plBtn) plBtn.classList.toggle('active', lang === 'pl');
+  if (enBtn) enBtn.classList.toggle('active', lang === 'en');
+}
+
+function applyI18n() {
+  // Static elements with data-i18n
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = t(el.dataset.i18n);
+  });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    el.title = t(el.dataset.i18nTitle);
+  });
+  // Search placeholder
+  const si = document.getElementById('searchInput');
+  if (si) si.placeholder = t('search_placeholder');
+}
+
+// Welcome modal language switch
+function setWelcomeLang(lang) {
+  setLang(lang);           // set UI language
+  saveSetting('replyLang', lang);  // also set AI reply language as convenience
+  document.getElementById('welcomeLangPL').classList.toggle('active', lang === 'pl');
+  document.getElementById('welcomeLangEN').classList.toggle('active', lang === 'en');
+  applyWelcomeTranslations(lang);
+}
+
+function applyWelcomeTranslations(lang) {
+  const T = TRANSLATIONS[lang] || TRANSLATIONS.pl;
+  document.querySelector('.welcome-title').textContent = T.w_title;
+  document.querySelector('.welcome-badge').textContent = T.w_badge;
+  const sections = document.querySelectorAll('.welcome-section');
+  const titles = document.querySelectorAll('.welcome-section-title');
+  // Section 0: info
+  titles[0].textContent = `ℹ️ ${T.w_info_title}`;
+  sections[0].querySelector('.welcome-text').textContent = T.w_info;
+  // Section 1: features
+  titles[1].textContent = `🚀 ${T.w_features_title}`;
+  const featureLis = sections[1].querySelectorAll('li span:last-child');
+  T.w_features.forEach((f, i) => { if (featureLis[i]) featureLis[i].textContent = f; });
+  // Section 2: requirements
+  titles[2].textContent = `🔑 ${T.w_req_title}`;
+  sections[2].querySelector('.welcome-text').textContent = T.w_req;
+  // Section 3: copyright
+  titles[3].textContent = `© ${T.w_copy_title}`;
+  sections[3].querySelector('.welcome-text').innerHTML = T.w_copy.replace('\n','<br>');
+  // Section 4: contact
+  titles[4].textContent = `📬 ${T.w_contact_title}`;
+  sections[4].querySelector('.welcome-text').innerHTML = `${T.w_contact}<br><a class="welcome-contact-link" href="mailto:lfilbrandt@wp.pl">📧 lfilbrandt@wp.pl</a>`;
+  // Footer
+  document.getElementById('welcomeCloseBtn').textContent = T.w_close_btn;
+  document.getElementById('welcomeDontShowLabel').textContent = T.w_dont_show;
+}
+
+// ============================================================
 // INIT — ordered boot sequence
 // ============================================================
 (function boot() {
@@ -4161,8 +4509,14 @@ async function analyzeSelected() {
     }
   }
 
-  // 6. Render
+  // 6. Render (applyI18n runs after DOM is populated)
   renderAll();
+  applyI18n();
+
+  // 7. Show welcome modal on first visit
+  if (!localStorage.getItem('ma_welcome_shown')) {
+    openWelcomeModal();
+  }
 })();
 </script>
 </body>
